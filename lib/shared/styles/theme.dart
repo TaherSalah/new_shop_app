@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:new_shop_app/shared/styles/style.dart';
 
-ThemeData lightMode =ThemeData(
+ThemeData lightMode = ThemeData(
     textTheme: const TextTheme(
         bodyText1: TextStyle(
-          color: Colors.black,
-          fontSize: 17.0,
-          fontWeight: FontWeight.bold,
-        )),
+      color: Colors.black,
+      fontSize: 17.0,
+      fontWeight: FontWeight.bold,
+    )),
+    fontFamily: 'jannah',
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
         unselectedIconTheme: IconThemeData(
@@ -16,10 +18,10 @@ ThemeData lightMode =ThemeData(
         ),
         unselectedItemColor: Colors.grey,
         elevation: 25.0),
-    primarySwatch: Colors.deepOrange,
+    primarySwatch: defaultColor,
     scaffoldBackgroundColor: Colors.white,
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Colors.deepOrange),
+    floatingActionButtonTheme:
+        const FloatingActionButtonThemeData(backgroundColor: Colors.deepOrange),
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(
         color: Colors.black,
@@ -40,13 +42,14 @@ ThemeData lightMode =ThemeData(
     bottomAppBarTheme: const BottomAppBarTheme(
       elevation: 20.0,
     ));
-ThemeData darkMode =ThemeData(
+ThemeData darkMode = ThemeData(
   textTheme: const TextTheme(
       bodyText1: TextStyle(
-        color: Colors.white,
-        fontSize: 17.0,
-        fontWeight: FontWeight.bold,
-      )),
+    color: Colors.white,
+    fontSize: 17.0,
+    fontWeight: FontWeight.bold,
+  )),
+  fontFamily: 'jannah',
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: HexColor('333739'),
       unselectedIconTheme: const IconThemeData(
@@ -55,7 +58,7 @@ ThemeData darkMode =ThemeData(
       unselectedItemColor: Colors.grey,
       elevation: 25.0),
   scaffoldBackgroundColor: HexColor('333739'),
-  primarySwatch: Colors.deepOrange,
+  primarySwatch:defaultColor,
   appBarTheme: AppBarTheme(
     iconTheme: const IconThemeData(
       color: Colors.white,
@@ -63,12 +66,6 @@ ThemeData darkMode =ThemeData(
     ),
     backgroundColor: HexColor('333739'),
     elevation: 20.0,
-    // ignore: deprecated_member_use
-    // titleTextStyle: const TextStyle(
-    //   color: Colors.white,
-    //   fontSize: 20.0,
-    //   fontWeight: FontWeight.bold,
-    // ),
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: HexColor('333739'),
       statusBarIconBrightness: Brightness.light,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop_app/shared/cubit/cubit.dart';
 import 'package:new_shop_app/shared/cubit/states.dart';
 import 'package:new_shop_app/shared/network/local/cache_helper.dart';
+import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
 import 'package:new_shop_app/shared/styles/theme.dart';
 
 import 'layout/shop_app_layout/on_boarding.dart';
@@ -10,7 +11,7 @@ import 'layout/shop_app_layout/on_boarding.dart';
 void main() async {
   ////// بتأكد ان كل حاجه هنا في اmethod خلصت وبعدين بيفتح الابلكيشن
   WidgetsFlutterBinding.ensureInitialized();
-  // DioHelper.init();
+  DioHelper.init();
   await CacheHelper.init();
   bool? isDark = CacheHelper.getBoolean(key: 'isDark');
   BlocOverrides.runZoned(() {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             fromShard: isDark,
           ),),
       ],
-      child: BlocConsumer<ThemeCubit,ShopState>(
+      child: BlocConsumer<ThemeCubit,ShopLoginStates>(
         listener: (context, state) {},
         builder: (context,state){
           return MaterialApp(
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeCubit.get(context).isDark
                   ? ThemeMode.dark
                   : ThemeMode.light,
-              home:BoardingScreen()
+              home: const BoardingScreen()
           );
         },
       ),

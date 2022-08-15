@@ -5,12 +5,12 @@ import 'package:new_shop_app/shared/cubit/states.dart';
 
 import '../network/local/cache_helper.dart';
 
-class ShopCubit extends Cubit<ShopState> {
+class ShopCubit extends Cubit<ShopLoginStates> {
   ShopCubit() :super(InitialShopState());
 }
 
   ////// dark theme cubit //////
-  class ThemeCubit extends Cubit<ShopState> {
+  class ThemeCubit extends Cubit<ShopLoginStates> {
   ThemeCubit() : super(InitialShopState());
 
   static ThemeCubit get(context) => BlocProvider.of(context);
