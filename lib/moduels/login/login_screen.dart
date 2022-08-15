@@ -1,3 +1,4 @@
+/////////// Start import files links /////////////
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
@@ -6,19 +7,28 @@ import 'package:new_shop_app/moduels/login/cubit/state.dart';
 import 'package:new_shop_app/shared/component/component.dart';
 import '../../shared/component/validate.dart';
 import '../register/shop_register_screen.dart';
+/////////// End import files links /////////////
 
+
+/////////// Start LoginScreen  class /////////////
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    /////////// Start LoginScreen  Variables /////////////
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
+    /////////// End LoginScreen  Variables /////////////
+
+    ///////////  Start LoginScreen  BlocProvider /////////////
     return BlocProvider(
       create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
         listener: (context, state) {},
         builder: (context, state) {
+          ///////////  Start ShopLoginCubit  object /////////////
+          var loginCubit = ShopLoginCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
             body: Center(
@@ -44,6 +54,7 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           height: 30.0,
                         ),
+                        ///////////  Start defualtFormField Email /////////////
                         defualtFormField(
                           controller: emailController,
                           type: TextInputType.text,
@@ -52,9 +63,11 @@ class LoginScreen extends StatelessWidget {
                           padding: 0.0,
                           validate: Validator.email,
                         ),
+                        ///////////  End defualtFormField Email /////////////
                         const SizedBox(
                           height: 30.0,
                         ),
+                        ///////////  Start defualtFormField password /////////////
                         defualtFormField(
                             controller: passwordController,
                             type: TextInputType.visiblePassword,
@@ -68,16 +81,18 @@ class LoginScreen extends StatelessWidget {
                                     password: passwordController.text);
                               }
                             },
-                            suffix:ShopLoginCubit.get(context).suffix,
-                            suffixPressed: (){
-                              ShopLoginCubit.get(context).changePasswordIcon();
+                            suffix: loginCubit.suffix,
+                            suffixPressed: () {
+                              loginCubit.changePasswordIcon();
                             },
-                            isPassword: ShopLoginCubit.get(context).isPassword,
+                            isPassword: loginCubit.isPassword,
                             padding: 0.0,
                             validate: Validator.password),
+                        ///////////  End defualtFormField password /////////////
                         const SizedBox(
                           height: 20.0,
                         ),
+                        ///////////  Start default Button Login /////////////
                         Conditional.single(
                           context: context,
                           conditionBuilder: (context) =>
@@ -95,9 +110,12 @@ class LoginScreen extends StatelessWidget {
                           fallbackBuilder: (context) =>
                               const CircularProgressIndicator(),
                         ),
+                        ///////////  End default Button Login /////////////
+
                         const SizedBox(
                           height: 13.0,
                         ),
+                        ///////////  Start Row login Footer /////////////
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -112,6 +130,7 @@ class LoginScreen extends StatelessWidget {
                                 text: 'Register Now'),
                           ],
                         ),
+                        ///////////  End Row login Footer /////////////
                       ],
                     ),
                   ),
@@ -122,5 +141,8 @@ class LoginScreen extends StatelessWidget {
         },
       ),
     );
+    ///////////  End LoginScreen  BlocProvider /////////////
+
   }
 }
+/////////// End LoginScreen  class /////////////

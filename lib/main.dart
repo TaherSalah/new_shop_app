@@ -5,7 +5,6 @@ import 'package:new_shop_app/shared/cubit/states.dart';
 import 'package:new_shop_app/shared/network/local/cache_helper.dart';
 import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
 import 'package:new_shop_app/shared/styles/theme.dart';
-
 import 'layout/shop_app_layout/on_boarding.dart';
 
 void main() async {
@@ -14,9 +13,11 @@ void main() async {
   DioHelper.init();
   await CacheHelper.init();
   bool? isDark = CacheHelper.getBoolean(key: 'isDark');
-  BlocOverrides.runZoned(() {
-    runApp(MyApp(isDark));
-  });
+  // ignore: deprecated_member_use
+  runApp(MyApp(isDark));
+  // BlocOverrides.runZoned(() {
+  //
+  // });
 }
 
 class MyApp extends StatelessWidget {
@@ -27,25 +28,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-
       providers: [
-        BlocProvider(  create: (context) => ThemeCubit()
-          ..changeMode(
-            fromShard: isDark,
-          ),),
+        BlocProvider(
+          create: (context) => ThemeCubit()
+            ..changeMode(
+              fromShard: isDark,
+            ),
+        ),
       ],
-      child: BlocConsumer<ThemeCubit,ShopLoginStates>(
+      child: BlocConsumer<ThemeCubit, ShopLoginStates>(
         listener: (context, state) {},
-        builder: (context,state){
+        builder: (context, state) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
+              debugShowCheckedModeBanner: false,
               theme: lightMode,
               darkTheme: darkMode,
               themeMode: ThemeCubit.get(context).isDark
                   ? ThemeMode.dark
                   : ThemeMode.light,
-              home: const BoardingScreen()
-          );
+              home: const BoardingScreen());
         },
       ),
     );

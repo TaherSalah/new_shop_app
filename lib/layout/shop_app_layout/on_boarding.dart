@@ -6,6 +6,7 @@ import '../../shared/component/component.dart';
 import '../../shared/styles/style.dart';
 
 //////////// CLASS MODEL FOR BOARDING ///////////////
+
 class BoardingModel {
   final String image;
   final String title;
@@ -13,17 +14,18 @@ class BoardingModel {
 
   BoardingModel({required this.image, required this.title, required this.body});
 }
+//////////// CLASS Boarding Screen ///////////////
 
 // ignore: must_be_immutable
 class BoardingScreen extends StatefulWidget {
-   const BoardingScreen({Key? key}) : super(key: key);
+  const BoardingScreen({Key? key}) : super(key: key);
   @override
   State<BoardingScreen> createState() => _BoardingScreenState();
 }
 
 class _BoardingScreenState extends State<BoardingScreen> {
-  bool isLast=false;
-
+  bool isLast = false;
+////////// Start Boarding List ////////////
   List<BoardingModel> boarding = [
     BoardingModel(
         image: 'assets/images/onboard_1.jpg',
@@ -38,38 +40,42 @@ class _BoardingScreenState extends State<BoardingScreen> {
         title: 'on_boarding TITLE screen 3',
         body: 'on_boarding BODY screen 3'),
   ];
+////////// End Boarding List ////////////
 
   @override
   Widget build(BuildContext context) {
     var boardController = PageController();
     return Scaffold(
+      ////////// Start AppBar Boarding ////////////
       appBar: AppBar(
-        actions:  [
+        actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
-                onPressed: (){navigateAndFinish(context, LoginScreen());},
-                child: Text('skipe'.toUpperCase())
-            ),
+                onPressed: () {
+                  navigateAndFinish(context, const LoginScreen());
+                },
+                child: Text('skip'.toUpperCase())),
           ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
+        ////////// Start Column Boarding ////////////
         child: Column(
           children: [
             Expanded(
+              ////////// Start PageView builder Boarding ////////////
               child: PageView.builder(
-                onPageChanged: (int index)
-                {
-                  if(index==boarding.length-1){
+                onPageChanged: (int index) {
+                  if (index == boarding.length - 1) {
                     // ignore: avoid_print
                     setState(() {
-                      isLast=true;
+                      isLast = true;
                     });
-                  }else{
+                  } else {
                     setState(() {
-                      isLast=false;
+                      isLast = false;
                     });
                   }
                 },
@@ -79,10 +85,15 @@ class _BoardingScreenState extends State<BoardingScreen> {
                     onBoardingItems(boarding[index]),
                 itemCount: boarding.length,
               ),
+              ////////// End PageView builder Boarding ////////////
             ),
-            const SizedBox(height: 20.0,),
+            const SizedBox(
+              height: 20.0,
+            ),
+            ////////// Start Row Boarding ////////////
             Row(
               children: [
+                ////////// Start SmoothPageIndicator Boarding ////////////
                 SmoothPageIndicator(
                   controller: boardController,
                   count: boarding.length,
@@ -95,24 +106,28 @@ class _BoardingScreenState extends State<BoardingScreen> {
                     activeDotColor: defaultColor,
                   ),
                 ),
+                ////////// End SmoothPageIndicator Boarding ////////////
                 const Spacer(),
+                ////////// Start FloatingActionButton Boarding ////////////
                 SizedBox(
                   height: 40.0,
                   width: 40.0,
                   child: FloatingActionButton(
-
                       onPressed: () {
-                      if(isLast==true)
-                      {
-                        navigateAndFinish(context, LoginScreen());
-                      }else{
-                        boardController.nextPage(
-                            duration: const Duration(milliseconds: 750),
-                            curve: Curves.fastLinearToSlowEaseIn);
-                      }
+                        if (isLast == true) {
+                          navigateAndFinish(context, const LoginScreen());
+                        } else {
+                          boardController.nextPage(
+                              duration: const Duration(milliseconds: 750),
+                              curve: Curves.fastLinearToSlowEaseIn);
+                        }
                       },
-                      child: const Icon(Icons.arrow_forward_ios,size: 20.0,)),
+                      child: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.0,
+                      )),
                 ),
+                ////////// End FloatingActionButton Boarding ////////////
               ],
             ),
           ],
@@ -122,6 +137,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
   }
 }
 
+/////////// Start Widget onBoardingItems /////////////
 Widget onBoardingItems(BoardingModel model) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -146,3 +162,4 @@ Widget onBoardingItems(BoardingModel model) => Column(
         ),
       ],
     );
+/////////// End Widget onBoardingItems /////////////

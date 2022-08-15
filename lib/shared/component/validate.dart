@@ -1,7 +1,6 @@
-
-// import '../feature/login/controller.dart';
-
+///////////  Start Validator class /////////////
 class Validator {
+  //////  Start Validator Email ///////
   static String? email(String? value) {
     if (value!.isEmpty) {
       return 'Email Empty!';
@@ -11,17 +10,21 @@ class Validator {
       return null;
     }
   }
+  //////  End Validator Email ///////
+  //////  Start Validator Password ///////
 
   static String? password(String? value) {
     if (value!.isEmpty) {
       return 'Password Empty!';
-    } else if (value.length < 6 ) {
+    } else if (value.length < 6) {
       return 'Password must be at least 6 digit';
     } else {
       return null;
     }
-
   }
+  //////  End Validator Password ///////
+
+  //////  Start Validator Title ///////
   static String? title(String? value) {
     if (value!.isEmpty) {
       return 'Title Empty!';
@@ -30,8 +33,10 @@ class Validator {
     } else {
       return null;
     }
-
+    //////  End Validator Title ///////
   }
+
+  //////  Start Validator Time ///////
   static String? time(String? value) {
     if (value!.isEmpty) {
       return 'Time Empty!';
@@ -40,9 +45,10 @@ class Validator {
     } else {
       return null;
     }
-
-
   }
+  //////  End Validator Time ///////
+
+  //////  Start Validator Date ///////
   static String? date(String? value) {
     if (value!.isEmpty) {
       return 'Date Empty!';
@@ -51,8 +57,9 @@ class Validator {
     } else {
       return null;
     }
-
   }
+//////  End Validator Date ///////
+
 // static String? confirmPassword(String? value) {
 //   if (value!.isEmpty) {
 //     return 'Invalid Confirm!';
@@ -64,3 +71,4 @@ class Validator {
 // }
 
 }
+///////////  End Validator class /////////////
