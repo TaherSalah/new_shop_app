@@ -47,6 +47,7 @@ dependencies:
   shared_preferences:
   webview_flutter:
   smooth_page_indicator:
+  fluttertoast:
 dev_dependencies:
   flutter_test:
     sdk: flutter

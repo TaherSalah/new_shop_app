@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_shop_app/moduels/login/cubit/cubit.dart';
 import 'package:new_shop_app/moduels/login/cubit/state.dart';
 import 'package:new_shop_app/shared/component/component.dart';
@@ -25,7 +26,39 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
-        listener: (context, state) {},
+        listener: (context, state)
+        {
+          if(state is ShopLoginSuccessState){
+            if(state.shopModel.status!){
+              Fluttertoast.showToast(
+                  msg: state.shopModel.message!,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+              // ignore: avoid_print
+                            // ignore: avoid_print
+print(state.shopModel.message);
+              // ignore: avoid_print
+              print(state.shopModel.data!.token);
+            }else{
+              Fluttertoast.showToast(
+                  msg: state.shopModel.message!,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+              // ignore: avoid_print
+              print(state.shopModel.message);
+            }
+          }
+        },
         builder: (context, state) {
           ///////////  Start ShopLoginCubit  object /////////////
           var loginCubit = ShopLoginCubit.get(context);

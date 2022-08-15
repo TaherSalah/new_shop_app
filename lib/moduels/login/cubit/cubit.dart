@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop_app/moduels/login/cubit/state.dart';
 import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
+import '../../../models/shop_model/login_model.dart';
 import '../../../shared/network/end_points.dart';
 
 ///////////  Start ShopLoginCubit Cubit /////////////
@@ -9,11 +10,13 @@ class ShopLoginCubit extends Cubit<ShopLoginStates>
 {
   ///////////  Constructor ShopLoginCubit Cubit Start /////////////
   ShopLoginCubit(): super(ShopLoginIntialState());
+  ShopModel? shopModel;
   ///////////  Constructor ShopLoginCubit Cubit  End /////////////
 
   ///////////   ShopLoginCubit Object Start /////////////
   static ShopLoginCubit get(context)=>BlocProvider.of(context);
   ///////////   ShopLoginCubit Object End /////////////
+
 
   ///////////  Start  login User Method /////////////
   void loginUser({
@@ -31,8 +34,16 @@ class ShopLoginCubit extends Cubit<ShopLoginStates>
       }
   ).then((value) {
     // ignore: avoid_print
-    print(value.data);
-    emit(ShopLoginSuccessState());
+    shopModel=ShopModel.fromJson(value.data);
+
+    // ignore: avoid_print
+    // print(shopModel?.message);
+    // ignore: avoid_print
+    // print(shopModel?.status);
+    // ignore: avoid_print
+    // print(shopModel?.data!.token);
+
+    emit(ShopLoginSuccessState(shopModel!));
   }).catchError((error){
     // ignore: avoid_print
     print(error.toString());
