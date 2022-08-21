@@ -14,13 +14,13 @@ class HomeDataModel{
   List<ProductsModel>products=[];
   HomeDataModel.fromJson(Map<String,dynamic>json){
     // ignore: avoid_function_literals_in_foreach_calls
-    banners.forEach((element) {
-      banners.add(element);
-    });
-    // ignore: avoid_function_literals_in_foreach_calls
-    products.forEach((element) {
-      products.add(element);
-    });
+ json['banners'].forEach((element){
+   banners.add(BannersModel.fromJson(element));
+ });
+
+ json['products'].forEach((element){
+   products.add(ProductsModel.fromJson(element));
+ });
   }
 
 }
