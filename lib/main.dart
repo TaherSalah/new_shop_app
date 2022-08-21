@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_shop_app/layout/shop_app_layout/home_shop_layout.dart';
 import 'package:new_shop_app/shared/cubit/cubit.dart';
 import 'package:new_shop_app/shared/cubit/states.dart';
 import 'package:new_shop_app/shared/network/local/cache_helper.dart';
 import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
 import 'package:new_shop_app/shared/styles/theme.dart';
-import 'layout/shop_app_layout/on_boarding.dart';
+import 'layout/shop_app_layout/cubit/cubit.dart';
+import 'moduels/on_boarding/on_boarding.dart';
+import 'moduels/login/login_screen.dart';
 
 void main() async {
-  ////// بتأكد ان كل حاجه هنا في اmethod خلصت وبعدين بيفتح الابلكيشن
+  ////// بتأكد ان كل حاجه هنا في method خلصت وبعدين بيفتح الابلكيشن
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
-  bool? isDark = CacheHelper.getBoolean(key: 'isDark');
+  Widget widget;
+  bool? isDark = CacheHelper.getData(key: 'isDark');
+  bool? onBoarding=CacheHelper.getData(key: 'onBoarding');
+  String? tokenData=CacheHelper.getData(key: 'token');
+  if (onBoarding!=null)
+  {
+    if(tokenData!=null)
+      {
+        widget =const ShopHomeLayout();
+      }else{
+      widget=const LoginScreen();
+    }
+    }else{
+    widget = const BoardingScreen();
+  }
+
+  // ignore: avoid_print
+  print(onBoarding);
   // ignore: deprecated_member_use
-  runApp(MyApp(isDark));
+  runApp(MyApp(
+  isDark:isDark,
+    startWidget:widget,
+  ));
   // BlocOverrides.runZoned(() {
   //
   // });
@@ -22,21 +45,28 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final bool? isDark;
+  final Widget? startWidget ;
   // ignore: use_key_in_widget_constructors
-  const MyApp(this.isDark);
+   const MyApp({
+    this.isDark,
+    this.startWidget,
+  });
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ThemeCubit()
+          create: (BuildContext context) => ShopCubit()..getHomeData(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => ThemeCubit()
             ..changeMode(
               fromShard: isDark,
             ),
         ),
       ],
-      child: BlocConsumer<ThemeCubit, ShopLoginStates>(
+      child: BlocConsumer<ThemeCubit,ShopThemeStates >(
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
@@ -46,7 +76,8 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeCubit.get(context).isDark
                   ? ThemeMode.dark
                   : ThemeMode.light,
-              home: const BoardingScreen());
+              home:  startWidget,
+          );
         },
       ),
     );

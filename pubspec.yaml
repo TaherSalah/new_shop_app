@@ -48,6 +48,8 @@ dependencies:
   webview_flutter:
   smooth_page_indicator:
   fluttertoast:
+  google_nav_bar:
+  carousel_slider:
 dev_dependencies:
   flutter_test:
     sdk: flutter

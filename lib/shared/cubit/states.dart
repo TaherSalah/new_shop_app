@@ -1,5 +1,5 @@
-abstract class ShopLoginStates{}
+abstract class ShopThemeStates{}
 
-class InitialShopState extends ShopLoginStates{}
+class InitialShopState extends ShopThemeStates{}
 
-class ChangeModeState extends ShopLoginStates{}
+class ChangeModeState extends ShopThemeStates{}

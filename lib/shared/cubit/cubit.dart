@@ -1,16 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop_app/shared/cubit/states.dart';
 
 import '../network/local/cache_helper.dart';
 
-class ShopCubit extends Cubit<ShopLoginStates> {
-  ShopCubit() :super(InitialShopState());
-}
+
 
   ////// dark theme cubit //////
-  class ThemeCubit extends Cubit<ShopLoginStates> {
+  class ThemeCubit extends Cubit<ShopThemeStates> {
   ThemeCubit() : super(InitialShopState());
 
   static ThemeCubit get(context) => BlocProvider.of(context);

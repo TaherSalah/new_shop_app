@@ -6,10 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_shop_app/moduels/login/cubit/cubit.dart';
 import 'package:new_shop_app/moduels/login/cubit/state.dart';
 import 'package:new_shop_app/shared/component/component.dart';
+import 'package:new_shop_app/shared/network/local/cache_helper.dart';
+import '../../layout/shop_app_layout/home_shop_layout.dart';
 import '../../shared/component/validate.dart';
 import '../register/shop_register_screen.dart';
 /////////// End import files links /////////////
-
 
 /////////// Start LoginScreen  class /////////////
 class LoginScreen extends StatelessWidget {
@@ -26,36 +27,26 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
-        listener: (context, state)
-        {
-          if(state is ShopLoginSuccessState){
-            if(state.shopModel.status!){
-              Fluttertoast.showToast(
-                  msg: state.shopModel.message!,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
+        listener: (context, state) {
+          if (state is ShopLoginSuccessState) {
+            if (state.shopModel.status!) {
+              showToast(
+                  text: state.shopModel.message,
+                  state: ToastStates.success);
+              CacheHelper.saveData(key: 'token', value: state.shopModel.data!.token).then((value) {
+                navigateAndFinish(context, ShopHomeLayout);
+              });
               // ignore: avoid_print
-                            // ignore: avoid_print
-print(state.shopModel.message);
-              // ignore: avoid_print
-              print(state.shopModel.data!.token);
-            }else{
-              Fluttertoast.showToast(
-                  msg: state.shopModel.message!,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
               // ignore: avoid_print
               print(state.shopModel.message);
+              // ignore: avoid_print
+              print(state.shopModel.data!.token);
+            } else {
+              // ignore: avoid_print
+              showToast(
+                  text: state.shopModel.message, state: ToastStates.error);
+              // ignore: avoid_print
+              // print(state.shopModel.message);
             }
           }
         },
@@ -175,7 +166,6 @@ print(state.shopModel.message);
       ),
     );
     ///////////  End LoginScreen  BlocProvider /////////////
-
   }
 }
 /////////// End LoginScreen  class /////////////

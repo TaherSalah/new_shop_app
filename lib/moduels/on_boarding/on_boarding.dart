@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_shop_app/moduels/login/login_screen.dart';
+import 'package:new_shop_app/shared/network/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../shared/component/component.dart';
@@ -7,11 +8,11 @@ import '../../shared/styles/style.dart';
 
 //////////// CLASS MODEL FOR BOARDING ///////////////
 
+
 class BoardingModel {
   final String image;
   final String title;
   final String body;
-
   BoardingModel({required this.image, required this.title, required this.body});
 }
 //////////// CLASS Boarding Screen ///////////////
@@ -25,6 +26,14 @@ class BoardingScreen extends StatefulWidget {
 
 class _BoardingScreenState extends State<BoardingScreen> {
   bool isLast = false;
+  void submitted() {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        // ignore: prefer_const_constructors
+        navigateAndFinish(context, LoginScreen());
+      }
+    });
+  }
 ////////// Start Boarding List ////////////
   List<BoardingModel> boarding = [
     BoardingModel(
@@ -51,11 +60,11 @@ class _BoardingScreenState extends State<BoardingScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-                onPressed: () {
-                  navigateAndFinish(context, const LoginScreen());
-                },
-                child: Text('skip'.toUpperCase())),
+            child:
+                TextButton(
+                    onPressed:submitted,
+                    child: Text('skip'.toUpperCase())
+                ),
           ),
         ],
       ),
@@ -115,7 +124,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
                   child: FloatingActionButton(
                       onPressed: () {
                         if (isLast == true) {
-                          navigateAndFinish(context, const LoginScreen());
+                          submitted();
                         } else {
                           boardController.nextPage(
                               duration: const Duration(milliseconds: 750),
