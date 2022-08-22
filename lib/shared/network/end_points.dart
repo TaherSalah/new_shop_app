@@ -1,3 +1,3 @@
 const loginPoints ='login';
 const home='home';
-const getCategories='categories';
+const get_categories='categories';

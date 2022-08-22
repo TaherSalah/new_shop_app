@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop_app/layout/shop_app_layout/cubit/cubit.dart';
 import 'package:new_shop_app/layout/shop_app_layout/cubit/states.dart';
+import 'package:new_shop_app/models/shop_categories_model/categories_model.dart';
 import 'package:new_shop_app/models/shop_home_model/home_model.dart';
 import 'package:new_shop_app/shared/styles/style.dart';
 import '../../shared/component/component.dart';
+
 /*****/ /////// End Products Import package ////////*****/
-
 /*****/ /////// Start Products Screen Class ////////*****/
-
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key}) : super(key: key);
   @override
@@ -25,9 +25,11 @@ class ProductsScreen extends StatelessWidget {
           // ignore: unnecessary_null_comparison
           ///////// Start Products conditionBuilder /////////
           conditionBuilder: (context) =>
-              ShopCubit.get(context).homeModel != null,
-          widgetBuilder: (context) =>
-              productsBuilder(ShopCubit.get(context).homeModel),
+              ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).categoriesModel != null,
+          widgetBuilder: (context) => productsBuilder(
+              ShopCubit.get(context).homeModel,
+              ShopCubit.get(context).categoriesModel),
           fallbackBuilder: (context) =>
               const Center(child: CircularProgressIndicator()),
         );
@@ -37,17 +39,17 @@ class ProductsScreen extends StatelessWidget {
     ///////// End Products Bloc Consumer /////////
   }
 }
-
 /*****/ /////// End Products Screen Class ////////*****/
 
 /*****/ /////// Start products Builder  Widget ////////*****/
-
-Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
+Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
+    SingleChildScrollView(
       child: Container(
         color: Colors.grey[300],
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///////// Start Products Carousel Slider /////////
               CarouselSlider(
@@ -72,9 +74,56 @@ Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
                   )),
               ///////// End Products Carousel Slider /////////
               const SizedBox(
-                height: 20.0,
+                height: 15.0,
               ),
-              ///////// Start Products Grid View /////////
+              ///////// Start Categories items  /////////
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Categories',
+                      style: titleStyle,
+                    ),
+                    // ignore: sized_box_for_whitespace
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+
+                    // ignore: sized_box_for_whitespace
+                    Container(
+                      height: 130.0,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => buildCategoriesItems(
+                            categoriesModel!.data!.data[index]),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          width: 5.0,
+                        ),
+                        itemCount: categoriesModel!.data!.data.length,
+                      ),
+                    ),
+
+                    ///////// End Categories items  /////////
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+
+                    ///////// Start Products Grid View /////////
+                    const Text(
+                      'New Products',
+                      style: titleStyle,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+
               GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -90,11 +139,9 @@ Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
         ),
       ),
     );
-
 /*****/ /////// End products Builder  Widget ////////*****/
 
 /*****/ /////// Start build Grid Items  Widget ////////*****/
-
 Widget buildGridItems(ProductsModel model) => Container(
       color: Colors.white,
       child: Column(
@@ -170,5 +217,36 @@ Widget buildGridItems(ProductsModel model) => Container(
         ],
       ),
     );
-
 /*****/ /////// End build Grid Items  Widget ////////*****/
+
+/*****/ /////// Start build Categories Items  Widget ////////*****/
+Widget buildCategoriesItems(DataModel model) => Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        Image(
+          image: NetworkImage('${model.image}'),
+          height: 130.0,
+          width: 125.0,
+          fit: fitCover,
+        ),
+        // ignore: avoid_unnecessary_containers
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(3.0),
+            color: Colors.grey.withOpacity(0.7),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Text(
+            textAlign: TextAlign.center,
+            '${model.name}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: blackColor,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    );
+/*****/ /////// End build Categories Items  Widget ////////*****/

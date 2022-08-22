@@ -81,4 +81,7 @@ flutter:
     - family: jannah
       fonts:
         - asset: assets/fonts/jannah.ttf
+    - family: proza
+      fonts:
+        - asset: assets/fonts/ProzaLibre-Bold.ttf
 

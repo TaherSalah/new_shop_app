@@ -8,6 +8,7 @@ import 'package:new_shop_app/shared/component/component.dart';
 import 'package:new_shop_app/shared/component/constance.dart';
 import 'package:new_shop_app/shared/network/end_points.dart';
 import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
+import '../../../models/shop_categories_model/categories_model.dart';
 import '../../../models/shop_home_model/home_model.dart';
 import '../../../moduels/settings/settings_screen.dart';
 
@@ -28,7 +29,7 @@ class ShopCubit extends Cubit<ShopStates> {
     currentIndex = index;
     emit(ShopBottomNavigationBarState());
   }
-
+  ///////////  Start Get Home Data ////////
   ///////////  new object from home Model ////////
    HomeModel? homeModel;
   void getHomeData() {
@@ -37,7 +38,7 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(ShopSuccessHomeDataState());
       homeModel = HomeModel.fromJson(value.data);
       // ignore: avoid_print
-      printFullText(homeModel!.data!.products[0].id.toString());
+      printFullText(homeModel!.data!.products[0].name.toString());
       // ignore: avoid_print
       // print(homeModel.status);
       // printFullText(homeModel.toString());
@@ -47,4 +48,39 @@ class ShopCubit extends Cubit<ShopStates> {
       print(error.toString());
     });
   }
+
+
+//////////// Start Get Categories Data /////////////
+
+
+  CategoriesModel? categoriesModel;
+
+  void getCategories()
+  {
+    DioHelper.getData(url: get_categories,token: tokenData,).then((value)
+    {
+      categoriesModel=CategoriesModel.fromJson(value.data);
+      emit(ShopSuccessCategoriesDataState());
+    }
+    ).catchError((error)
+    {
+      emit(ShopErrorCategoriesDataState(error));
+      // ignore: avoid_print
+      print(error.toString());
+    });
+  }
+
 }
+
+
+//////////// End Get Categories Data /////////////
+
+
+///////////  End Get Home Data ////////
+
+
+
+
+
+
+
