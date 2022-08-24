@@ -2,12 +2,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/cubit.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/states.dart';
-import 'package:new_shop_app/models/shop_categories_model/categories_model.dart';
-import 'package:new_shop_app/models/shop_home_model/home_model.dart';
-import 'package:new_shop_app/shared/styles/style.dart';
+import '../../layout/shop_app_layout/cubit/cubit.dart';
+import '../../layout/shop_app_layout/cubit/states.dart';
+import '../../models/shop_categories_model/categories_model.dart';
+import '../../models/shop_home_model/home_model.dart';
 import '../../shared/component/component.dart';
+import '../../shared/styles/style.dart';
 
 /*****/ /////// End Products Import package ////////*****/
 /*****/ /////// Start Products Screen Class ////////*****/
@@ -19,7 +19,7 @@ class ProductsScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = ShopCubit.get(context).homeModel;
+        // var cubit = ShopCubit.get(context).homeModel;
         return conditionalBuilder(
           context: context,
           // ignore: unnecessary_null_comparison
@@ -44,6 +44,7 @@ class ProductsScreen extends StatelessWidget {
 /*****/ /////// Start products Builder  Widget ////////*****/
 Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
     SingleChildScrollView(
+      scrollDirection: Axis.vertical,
       child: Container(
         color: Colors.grey[300],
         child: Padding(
@@ -90,7 +91,6 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
                     const SizedBox(
                       height: 10.0,
                     ),
-
                     // ignore: sized_box_for_whitespace
                     Container(
                       height: 130.0,
@@ -99,19 +99,17 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => buildCategoriesItems(
-                            categoriesModel!.data!.data[index]),
+                            categoriesModel.data!.data[index]),
                         separatorBuilder: (context, index) => const SizedBox(
                           width: 5.0,
                         ),
                         itemCount: categoriesModel!.data!.data.length,
                       ),
                     ),
-
                     ///////// End Categories items  /////////
                     const SizedBox(
                       height: 15.0,
                     ),
-
                     ///////// Start Products Grid View /////////
                     const Text(
                       'New Products',
@@ -123,11 +121,11 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
               const SizedBox(
                 height: 15.0,
               ),
-
+////////////////// Grid View  //////////////////////
               GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  childAspectRatio: 1 / 1.82,
+                  childAspectRatio: 1 / 1.88,
                   mainAxisSpacing: 2.0,
                   crossAxisSpacing: 2.0,
                   crossAxisCount: 2,
@@ -184,32 +182,38 @@ Widget buildGridItems(ProductsModel model) => Container(
                       overflow: TextOverflow.ellipsis, height: 1.5),
                 ),
                 /*****/ ///////Products Price & Discount////////*****/
-
-                Row(
-                  children: [
-                    Text(
-                      '${model.price.round()}',
-                      style: const TextStyle(color: defaultColor),
-                    ),
-                    const SizedBox(
-                      width: 15.0,
-                    ),
-                    if (model.discount != 0)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    children: [
                       Text(
-                        '${model.oldPrice.round()}',
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12.0,
-                          decoration: TextDecoration.lineThrough,
-                        ),
+                        '${model.price.round()}',
+                        style: const TextStyle(color: defaultColor),
                       ),
-                    const Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border,
-                        ))
-                  ],
+                      const SizedBox(
+                        width: 15.0,
+                      ),
+                      if (model.discount != 0)
+                        Text(
+                          '${model.oldPrice.round()}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12.0,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      const Spacer(),
+                      CircleAvatar(
+                        radius: 19.0,
+                        backgroundColor: defaultColor,
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.favorite_border_outlined,
+                            )),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

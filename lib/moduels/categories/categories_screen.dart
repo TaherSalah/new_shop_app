@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/cubit.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/states.dart';
-import 'package:new_shop_app/models/shop_categories_model/categories_model.dart';
-import 'package:new_shop_app/shared/component/component.dart';
-import 'package:new_shop_app/shared/styles/style.dart';
+
+import '../../layout/shop_app_layout/cubit/cubit.dart';
+import '../../layout/shop_app_layout/cubit/states.dart';
+import '../../models/shop_categories_model/categories_model.dart';
+import '../../shared/component/component.dart';
+import '../../shared/styles/style.dart';
+
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class CategoryScreen extends StatelessWidget {
       builder: (context,state){
         var cubit=ShopCubit.get(context).categoriesModel!.data;
         return ListView.separated(
-          itemBuilder: (context, index) => buildCategoriesScreen(cubit!.data[index]),
+          itemBuilder: (context, index) => buildCategoriesScreen(cubit.data[index],context),
           separatorBuilder: (context, index) => myDivider(),
           itemCount: cubit!.data.length,
         );
@@ -25,7 +27,7 @@ class CategoryScreen extends StatelessWidget {
   }
 }
 
-Widget buildCategoriesScreen(DataModel model) => Padding(
+Widget buildCategoriesScreen(DataModel model,context) => Padding(
       padding: const EdgeInsets.all(10.0),
       child: Row(
         children:  [
@@ -36,16 +38,14 @@ Widget buildCategoriesScreen(DataModel model) => Padding(
             height: 120.0,
             fit: fitCover,
           ),
-          SizedBox(width: 10.0,),
+          const SizedBox(width: 10.0,),
           Text(
            ' ${model.name}',
-            style: TextStyle(
-              fontSize: 17.0,
-              fontWeight: FontWeight.bold
-            ),
+            style:Theme.of(context).textTheme.bodyText1,
+
           ),
           const Spacer(),
-          const Icon(Icons.arrow_forward_ios)
+           Icon(Icons.arrow_forward_ios,)
         ],
       ),
     );

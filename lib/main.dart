@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_shop_app/layout/shop_app_layout/home_shop_layout.dart';
-import 'package:new_shop_app/shared/cubit/cubit.dart';
-import 'package:new_shop_app/shared/cubit/states.dart';
-import 'package:new_shop_app/shared/network/local/cache_helper.dart';
-import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
-import 'package:new_shop_app/shared/styles/theme.dart';
+import 'package:softagy_shop_app/shared/cubit/cubit.dart';
+import 'package:softagy_shop_app/shared/cubit/states.dart';
+import 'package:softagy_shop_app/shared/network/local/cache_helper.dart';
+import 'package:softagy_shop_app/shared/network/remote/dio_helper.dart';
+import 'package:softagy_shop_app/shared/styles/theme.dart';
+
 import 'layout/shop_app_layout/cubit/cubit.dart';
+import 'layout/shop_app_layout/home_shop_layout.dart';
 import 'moduels/on_boarding/on_boarding.dart';
 import 'moduels/login/login_screen.dart';
 
@@ -33,6 +34,9 @@ void main() async {
 
   // ignore: avoid_print
   print(onBoarding);
+  // ignore: avoid_print
+  print(tokenData);
+
   // ignore: deprecated_member_use
   runApp(MyApp(
   isDark:isDark,

@@ -1,4 +1,4 @@
-# new_shop_app
+# softagy_shop_app
 
 A new Flutter project.
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/states.dart';
-import 'package:new_shop_app/moduels/categories/categories_screen.dart';
-import 'package:new_shop_app/moduels/favorites/favorites_screen.dart';
-import 'package:new_shop_app/moduels/products/products_screen.dart';
-import 'package:new_shop_app/shared/component/component.dart';
-import 'package:new_shop_app/shared/component/constance.dart';
-import 'package:new_shop_app/shared/network/end_points.dart';
-import 'package:new_shop_app/shared/network/remote/dio_helper.dart';
+import 'package:softagy_shop_app/layout/shop_app_layout/cubit/states.dart';
 import '../../../models/shop_categories_model/categories_model.dart';
 import '../../../models/shop_home_model/home_model.dart';
+import '../../../moduels/categories/categories_screen.dart';
+import '../../../moduels/favorites/favorites_screen.dart';
+import '../../../moduels/products/products_screen.dart';
 import '../../../moduels/settings/settings_screen.dart';
+import '../../../shared/component/component.dart';
+import '../../../shared/component/constance.dart';
+import '../../../shared/network/end_points.dart';
+import '../../../shared/network/remote/dio_helper.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(ShopInitialState());
@@ -25,6 +25,7 @@ class ShopCubit extends Cubit<ShopStates> {
     const FavoritesScreen(),
     const SettingesScreen(),
   ];
+  Map<int?,bool?>favorites={};
   void changeBottom(int index) {
     currentIndex = index;
     emit(ShopBottomNavigationBarState());
@@ -37,8 +38,18 @@ class ShopCubit extends Cubit<ShopStates> {
     DioHelper.getData(url: home, token: tokenData).then((value) {
       emit(ShopSuccessHomeDataState());
       homeModel = HomeModel.fromJson(value.data);
+      /////// create favorites method //////
+      // ignore: avoid_function_literals_in_foreach_calls
+      homeModel!.data!.products.forEach((element)
+      {
+        favorites.addAll({
+          element.id:element.inFavorites
+        });
+        // ignore: avoid_print
+        // print(favorites.toString());
+      });
       // ignore: avoid_print
-      printFullText(homeModel!.data!.products[0].name.toString());
+      // printFullText(homeModel!.data!.products[0].name.toString());
       // ignore: avoid_print
       // print(homeModel.status);
       // printFullText(homeModel.toString());
@@ -49,12 +60,8 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-
 //////////// Start Get Categories Data /////////////
-
-
   CategoriesModel? categoriesModel;
-
   void getCategories()
   {
     DioHelper.getData(url: get_categories,token: tokenData,).then((value)

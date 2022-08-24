@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:new_shop_app/moduels/login/login_screen.dart';
-import 'package:new_shop_app/shared/network/local/cache_helper.dart';
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../shared/component/component.dart';
+import '../../shared/network/local/cache_helper.dart';
 import '../../shared/styles/style.dart';
+import '../login/login_screen.dart';
 
 //////////// CLASS MODEL FOR BOARDING ///////////////
 

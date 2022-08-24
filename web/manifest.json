@@ -1,6 +1,6 @@
 {
-    "name": "new_shop_app",
-    "short_name": "new_shop_app",
+    "name": "softagy_shop_app",
+    "short_name": "softagy_shop_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

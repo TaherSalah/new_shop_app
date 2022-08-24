@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_shop_app/shared/cubit/states.dart';
+import 'package:softagy_shop_app/shared/cubit/states.dart';
 
 import '../network/local/cache_helper.dart';
 

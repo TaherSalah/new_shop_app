@@ -1,4 +1,4 @@
-name: new_shop_app
+name: softagy_shop_app
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.17.6-271.4.beta <3.0.0'
+  sdk: '>=2.18.0-271.7.beta <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -73,15 +73,17 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-
   assets:
     - assets/images/
 
+
   fonts:
-    - family: jannah
+    - family: ProzaLibre
       fonts:
         - asset: assets/fonts/jannah.ttf
-    - family: proza
+    - family: Trajan Pro
       fonts:
         - asset: assets/fonts/ProzaLibre-Bold.ttf
-
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

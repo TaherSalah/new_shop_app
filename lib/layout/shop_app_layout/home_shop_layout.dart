@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/cubit.dart';
-import 'package:new_shop_app/layout/shop_app_layout/cubit/states.dart';
-import 'package:new_shop_app/moduels/search/search_screen.dart';
-import 'package:new_shop_app/shared/component/component.dart';
+
+import '../../moduels/search/search_screen.dart';
+import '../../shared/component/component.dart';
+import 'cubit/cubit.dart';
+import 'cubit/states.dart';
+
 
 class ShopHomeLayout extends StatelessWidget {
   const ShopHomeLayout({Key? key}) : super(key: key);
