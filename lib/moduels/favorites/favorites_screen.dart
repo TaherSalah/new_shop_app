@@ -12,105 +12,108 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 15.0),
-      child: BlocConsumer<ShopCubit,ShopStates>(
-        listener: (context,state){},
-        builder: (context,state){
+      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+      child: BlocConsumer<ShopCubit, ShopStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
           return ListView.separated(
-              itemBuilder: (context,index)=>buildFavoritesItems(context,ShopCubit.get(context).getFavoritesModel),
-              separatorBuilder: (context,index)=>Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: myDivider(),
-              ),
-              itemCount:10);
+              itemBuilder: (context, index) => buildFavoritesItems(
+                  ShopCubit.get(context).getFavoritesModel!.data!.data[index],
+                  context),
+              separatorBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(13.0),
+                    child: myDivider(),
+                  ),
+              itemCount:ShopCubit.get(context).getFavoritesModel!.data!.data!.length);
         },
       ),
     );
   }
 }
 
-Widget buildFavoritesItems(context,GetFavoritesModel? model)=>Row(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-    Container(
-      height: 100,
-      width: 100,
-      child: Stack(
-        alignment: AlignmentDirectional.bottomStart,
-        children: [
-           Image(
-            image: NetworkImage(
-                '${model.d  }'),
-            height: 130.0,
-            width: 125.0,
-            fit: fitCover,
+Widget buildFavoritesItems(Data model, context) => Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 100,
+          width: 100,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              Image(
+                image: NetworkImage(
+                    // ignore: unnecessary_string_interpolations
+                    '${model.product!.image}'),
+                height: 130.0,
+                width: 125.0,
+                fit: fitCover,
+              ),
+              if (model.product!.discount != 0)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  color: defaultColor,
+                  child: Text(
+                    '${model.product!.discount}',
+                    style: const TextStyle(fontSize: 12.5, color: Colors.white),
+                  ),
+                ),
+            ],
           ),
-          // if (model?.discount!= 0)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              color: defaultColor,
-              child:  Text(
-                'model?.discount',
-                style: TextStyle(fontSize: 12.5, color: Colors.white),
-              ),
-            ),
-        ],
-      ),
-    ),
-    sizeBoxW,
-    Expanded(
-      child: Container(
-        height: 100,
-        width: 100,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'model?.name',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2!
-                  .copyWith(color: whiteColor),
-            ),
-            Spacer(),
-            Expanded(
-              child: Row(
-                children: [
-                   Expanded(
-                     child: Text(
-                       'model?.price',
-                      style: captionProduct,
-                  ),
-                   ),
-                  sizeBoxW,
-                   Expanded(
-                     child: Text(
-                      'model?.oldPrice',
-                      style: captionProduct,
-                  ),
-                   ),
-                  const Spacer(),
-                  Expanded(
-                    child: CircleAvatar(
-                      radius: 17,
-                      backgroundColor: Colors.grey,
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_border_outlined,
-                            color: whiteColor,
-                            size: 17,
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
-      ),
-    ),
-  ],
-);
+        sizeBoxW,
+        Expanded(
+          child: Container(
+            height: 100,
+            width: 100,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  model.product!.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2!
+                      .copyWith(color: whiteColor),
+                ),
+                const Spacer(),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '${model.product!.price}',
+                          style: captionProduct,
+                        ),
+                      ),
+                      sizeBoxW,
+                      Expanded(
+                        child: Text(
+                          '${model.product!.oldPrice}',
+                          style: captionProduct,
+                        ),
+                      ),
+                      const Spacer(),
+                      Expanded(
+                        child: CircleAvatar(
+                          radius: 17,
+                          backgroundColor: Colors.grey,
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.favorite_border_outlined,
+                                color: whiteColor,
+                                size: 17,
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );

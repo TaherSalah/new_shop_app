@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/states.dart';
+import 'package:softagy_shop_app/shared/component/component.dart';
 import 'package:softagy_shop_app/shared/network/local/cache_helper.dart';
 import '../../../models/Shop_add_favorites/add_favorites_model.dart';
 import '../../../models/get_favorites_model/get_favorites.dart';
@@ -11,7 +11,6 @@ import '../../../moduels/categories/categories_screen.dart';
 import '../../../moduels/favorites/favorites_screen.dart';
 import '../../../moduels/products/products_screen.dart';
 import '../../../moduels/settings/settings_screen.dart';
-import '../../../shared/component/component.dart';
 import '../../../shared/component/constance.dart';
 import '../../../shared/network/end_points.dart';
 import '../../../shared/network/remote/dio_helper.dart';
@@ -95,6 +94,7 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(ShopSuccessChangeFavoritesState(favoritesModel!));
       // ignore: avoid_print
 
+      // ignore: avoid_print
       print(value.data);
     }).catchError((error) {
       favorites[productsId] = !favorites[productsId]!;
@@ -129,10 +129,10 @@ class ShopCubit extends Cubit<ShopStates> {
 
     DioHelper.getData(
       url: getFavorites,
-   token: tokenData,
+   token: CacheHelper.getData(key: 'token'),
     ).then((value) {
       getFavoritesModel = GetFavoritesModel.fromJson(value.data);
-
+printFullText(value.data.toString());
       emit(ShopSuccessFavoritesGetDataState());
     }).catchError((error) {
       // ignore: avoid_print
