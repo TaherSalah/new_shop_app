@@ -13,5 +13,6 @@ const sizeBoxW = SizedBox(
 );
 
 const double defFontSize = 16.0;
-const TextStyle titleStyle =
+const TextStyle headStyle =
     TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontFamily: 'proza');
+const TextStyle captionProduct=TextStyle(fontSize: 14,fontWeight: FontWeight.bold ,color: Colors.white);

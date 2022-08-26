@@ -45,7 +45,7 @@ Widget buildCategoriesScreen(DataModel model,context) => Padding(
 
           ),
           const Spacer(),
-           Icon(Icons.arrow_forward_ios,)
+           const Icon(Icons.arrow_forward_ios,)
         ],
       ),
     );

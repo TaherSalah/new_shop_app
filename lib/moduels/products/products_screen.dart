@@ -17,7 +17,18 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ///////// Start Products Bloc Consumer /////////
     return BlocConsumer<ShopCubit, ShopStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        ////////////////////  for Sure add to favorites For Error message or Success Message //////////////////////
+        if (state is ShopSuccessChangeFavoritesState) {
+          if (state.favoritesModel.status == false) {
+            showToast(
+                state: ToastStates.error, text: state.favoritesModel.message);
+          } else {
+            showToast(
+                state: ToastStates.success, text: state.favoritesModel.message);
+          }
+        }
+      },
       builder: (context, state) {
         // var cubit = ShopCubit.get(context).homeModel;
         return conditionalBuilder(
@@ -28,8 +39,10 @@ class ProductsScreen extends StatelessWidget {
               ShopCubit.get(context).homeModel != null &&
               ShopCubit.get(context).categoriesModel != null,
           widgetBuilder: (context) => productsBuilder(
-              ShopCubit.get(context).homeModel,
-              ShopCubit.get(context).categoriesModel),
+            ShopCubit.get(context).homeModel,
+            ShopCubit.get(context).categoriesModel,
+            context,
+          ),
           fallbackBuilder: (context) =>
               const Center(child: CircularProgressIndicator()),
         );
@@ -42,7 +55,8 @@ class ProductsScreen extends StatelessWidget {
 /*****/ /////// End Products Screen Class ////////*****/
 
 /*****/ /////// Start products Builder  Widget ////////*****/
-Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
+Widget productsBuilder(
+        HomeModel? model, CategoriesModel? categoriesModel, context) =>
     SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
@@ -85,7 +99,7 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
                   children: [
                     const Text(
                       'Categories',
-                      style: titleStyle,
+                      style: headStyle,
                     ),
                     // ignore: sized_box_for_whitespace
                     const SizedBox(
@@ -113,7 +127,7 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
                     ///////// Start Products Grid View /////////
                     const Text(
                       'New Products',
-                      style: titleStyle,
+                      style: headStyle,
                     ),
                   ],
                 ),
@@ -129,8 +143,10 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
                   mainAxisSpacing: 2.0,
                   crossAxisSpacing: 2.0,
                   crossAxisCount: 2,
-                  children: List.generate(model.data!.products.length,
-                      (index) => buildGridItems(model.data!.products[index]))),
+                  children: List.generate(
+                      model.data!.products.length,
+                      (index) => buildGridItems(
+                          model.data!.products[index], context))),
               ///////// End Products Grid View /////////
             ],
           ),
@@ -140,7 +156,7 @@ Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
 /*****/ /////// End products Builder  Widget ////////*****/
 
 /*****/ /////// Start build Grid Items  Widget ////////*****/
-Widget buildGridItems(ProductsModel model) => Container(
+Widget buildGridItems(ProductsModel model, context) => Container(
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +199,7 @@ Widget buildGridItems(ProductsModel model) => Container(
                 ),
                 /*****/ ///////Products Price & Discount////////*****/
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 9.0),
                   child: Row(
                     children: [
                       Text(
@@ -204,12 +220,19 @@ Widget buildGridItems(ProductsModel model) => Container(
                         ),
                       const Spacer(),
                       CircleAvatar(
-                        radius: 19.0,
-                        backgroundColor: defaultColor,
+                        radius: 17.0,
+                        backgroundColor:
+                            ShopCubit.get(context).favorites[model.id] == true
+                                ? defaultColor
+                                : Colors.grey,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ShopCubit.get(context).changFavorites(model.id!);
+                            },
                             icon: const Icon(
                               Icons.favorite_border_outlined,
+                              color: whiteColor,
+                              size: 17,
                             )),
                       )
                     ],

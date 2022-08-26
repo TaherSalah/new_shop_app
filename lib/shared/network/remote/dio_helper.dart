@@ -17,7 +17,7 @@ class DioHelper {
   static Future<Response> getData({
     required String url,
     // required Map<String, dynamic>query,
-    String lang = 'en',
+    String lang = 'ar',
     String? token,
   }) async {
     dio.options.headers = {
@@ -35,7 +35,7 @@ class DioHelper {
     required String url,
     Map<String, dynamic>? query,
     required Map<String, dynamic> data,
-    String lang = 'en',
+    String lang = 'ar',
     String? token,
   }) async {
     dio.options.headers = {

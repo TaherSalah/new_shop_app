@@ -4,14 +4,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../styles/style.dart';
 ///////////  Start  Divider Widget /////////////
-Widget myDivider() => Padding(
-      padding: const EdgeInsetsDirectional.only(start: 20.0),
-      child: Container(
-        width: double.infinity,
-        height: 2.0,
-        color: Colors.grey[300],
-      ),
-    );
+Widget myDivider() => Container(
+  width: double.infinity,
+  height: 2.0,
+  color: Colors.grey[300],
+);
 ///////////  End  Divider Widget /////////////
 
 ///////////  Start  defualt Form Field Widget /////////////
