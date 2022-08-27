@@ -106,22 +106,7 @@ class ShopCubit extends Cubit<ShopStates> {
 ////////////  End Get Favorites Model Method ////////////
 
 ////////////  Start Get Favorites Model Method ////////////
-//   FavoritesGetModel ? favoritesGetModel;
-//
-//   void favoritesGetData() {
-//     DioHelper.getData(
-//       url: getFavorites,
-//       token: tokenData,
-//     ).then((value) {
-//       favoritesGetModel = FavoritesGetModel.fromJson(value.data);
-//       // printFullText(value.data.toString());
-//       emit(ShopSuccessFavoritesGetDataState());
-//     }).catchError((error) {
-//       emit(ShopErrorFavoritesGetDataState(error));
-//       // ignore: avoid_print
-//       print(error.toString());
-//     });
-//   }
+
   GetFavoritesModel? getFavoritesModel;
 
   void favoritesGetData() {

@@ -225,11 +225,11 @@ Widget buildGridItems(ProductsModel model, context) => Container(
                           },
                           icon:  Icon(
                             Icons.favorite_rounded,
-                            color: ShopCubit.get(context).favorites[model.id] == true
+                            color: ShopCubit.get(context).favorites[model.id!] == true
                                 ? defaultColor
                                 : Colors.grey,
                             size: 20,
-                          ))
+                          )),
                     ],
                   ),
                 ),

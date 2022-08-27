@@ -90,7 +90,7 @@ Widget buildFavoritesItems(Data model, context) => Row(
                       if (model.product!.discount != 0)
                         Text(
                           '${model.product!.oldPrice.round()}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
@@ -98,13 +98,17 @@ Widget buildFavoritesItems(Data model, context) => Row(
                         ),
                       const Spacer(),
                       IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_border,
-                            color: defaultColor,
+                          onPressed: () {
+                            ShopCubit.get(context).changFavorites(model.product!.id);
+                          },
+                          icon:  Icon(
+                            Icons.favorite_rounded,
+                            color: ShopCubit.get(context).favorites[model.product!.id] == true
+                                ? grayColor
+                                : defaultColor,
                             size: 20,
                           )),
+
                     ],
                   ),
                 ),
