@@ -24,7 +24,8 @@ class FavoritesScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(13.0),
                     child: myDivider(),
                   ),
-              itemCount:ShopCubit.get(context).getFavoritesModel!.data!.data!.length);
+              itemCount:
+                  ShopCubit.get(context).getFavoritesModel!.data!.data.length);
         },
       ),
     );
@@ -35,8 +36,9 @@ Widget buildFavoritesItems(Data model, context) => Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 100,
-          width: 100,
+          height: 130.0,
+          width: 125.0,
+          color: whiteColor,
           child: Stack(
             alignment: AlignmentDirectional.bottomStart,
             children: [
@@ -46,14 +48,13 @@ Widget buildFavoritesItems(Data model, context) => Row(
                     '${model.product!.image}'),
                 height: 130.0,
                 width: 125.0,
-                fit: fitCover,
               ),
               if (model.product!.discount != 0)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   color: defaultColor,
                   child: Text(
-                    '${model.product!.discount}',
+                    'discount',
                     style: const TextStyle(fontSize: 12.5, color: Colors.white),
                   ),
                 ),
@@ -81,33 +82,29 @@ Widget buildFavoritesItems(Data model, context) => Row(
                 Expanded(
                   child: Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          '${model.product!.price}',
-                          style: captionProduct,
-                        ),
+                      Text(
+                        '${model.product!.price.round()}',
+                        style: captionProduct,
                       ),
                       sizeBoxW,
-                      Expanded(
-                        child: Text(
-                          '${model.product!.oldPrice}',
-                          style: captionProduct,
+                      if (model.product!.discount != 0)
+                        Text(
+                          '${model.product!.oldPrice.round()}',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough),
                         ),
-                      ),
                       const Spacer(),
-                      Expanded(
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: Colors.grey,
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.favorite_border_outlined,
-                                color: whiteColor,
-                                size: 17,
-                              )),
-                        ),
-                      ),
+                      IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.favorite_border,
+                            color: defaultColor,
+                            size: 20,
+                          )),
                     ],
                   ),
                 ),

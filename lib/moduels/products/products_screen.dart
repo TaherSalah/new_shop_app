@@ -139,7 +139,7 @@ Widget productsBuilder(
               GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  childAspectRatio: 1 / 1.88,
+                  childAspectRatio:1/1.92,
                   mainAxisSpacing: 2.0,
                   crossAxisSpacing: 2.0,
                   crossAxisCount: 2,
@@ -219,22 +219,17 @@ Widget buildGridItems(ProductsModel model, context) => Container(
                           ),
                         ),
                       const Spacer(),
-                      CircleAvatar(
-                        radius: 17.0,
-                        backgroundColor:
-                            ShopCubit.get(context).favorites[model.id] == true
+                      IconButton(
+                          onPressed: () {
+                            ShopCubit.get(context).changFavorites(model.id!);
+                          },
+                          icon:  Icon(
+                            Icons.favorite_rounded,
+                            color: ShopCubit.get(context).favorites[model.id] == true
                                 ? defaultColor
                                 : Colors.grey,
-                        child: IconButton(
-                            onPressed: () {
-                              ShopCubit.get(context).changFavorites(model.id!);
-                            },
-                            icon: const Icon(
-                              Icons.favorite_border_outlined,
-                              color: whiteColor,
-                              size: 17,
-                            )),
-                      )
+                            size: 20,
+                          ))
                     ],
                   ),
                 ),
