@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/cubit.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/states.dart';
 import 'package:softagy_shop_app/models/get_favorites_model/get_favorites.dart';
@@ -14,18 +15,33 @@ class FavoritesScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
       child: BlocConsumer<ShopCubit, ShopStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ShopSuccessChangeFavoritesState) {
+            if (state.favoritesModel.status == false) {
+              showToast(
+                  state: ToastStates.error, text: state.favoritesModel.message);
+            } else {
+              showToast(
+                  state: ToastStates.success, text: state.favoritesModel.message);
+            }
+          }
+        },
         builder: (context, state) {
-          return ListView.separated(
+          return Conditional.single(
+            context:  context,
+            conditionBuilder:(context) => state is! ShopLoadingFavoritesGetDataState,
+          widgetBuilder: (BuildContext context)=>ListView.separated(
               itemBuilder: (context, index) => buildFavoritesItems(
                   ShopCubit.get(context).getFavoritesModel!.data!.data[index],
                   context),
               separatorBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: myDivider(),
-                  ),
+                padding: const EdgeInsets.all(13.0),
+                child: myDivider(),
+              ),
               itemCount:
-                  ShopCubit.get(context).getFavoritesModel!.data!.data.length);
+              ShopCubit.get(context).getFavoritesModel!.data!.data.length),
+            fallbackBuilder:  (BuildContext context)=>const Center(child: CircularProgressIndicator()),
+          );
         },
       ),
     );
@@ -53,9 +69,9 @@ Widget buildFavoritesItems(Data model, context) => Row(
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   color: defaultColor,
-                  child: Text(
+                  child: const Text(
                     'discount',
-                    style: const TextStyle(fontSize: 12.5, color: Colors.white),
+                    style: TextStyle(fontSize: 12.5, color: Colors.white),
                   ),
                 ),
             ],
@@ -73,10 +89,8 @@ Widget buildFavoritesItems(Data model, context) => Row(
                   model.product!.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: whiteColor),
+                  style: const TextStyle(
+                      overflow: TextOverflow.ellipsis, height: 1.5),
                 ),
                 const Spacer(),
                 Expanded(
@@ -84,7 +98,7 @@ Widget buildFavoritesItems(Data model, context) => Row(
                     children: [
                       Text(
                         '${model.product!.price.round()}',
-                        style: captionProduct,
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                       sizeBoxW,
                       if (model.product!.discount != 0)

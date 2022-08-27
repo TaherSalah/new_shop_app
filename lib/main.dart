@@ -78,8 +78,8 @@ class MyApp extends StatelessWidget {
               theme: lightMode,
               darkTheme: darkMode,
               themeMode: ThemeCubit.get(context).isDark
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
               home:  startWidget,
           );
         },

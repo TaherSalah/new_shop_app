@@ -90,6 +90,8 @@ class ShopCubit extends Cubit<ShopStates> {
       favoritesModel = FavoritesModel.fromJson(value.data);
       if (favoritesModel!.status == false) {
         favorites[productsId] = !favorites[productsId]!;
+      } else {
+        favoritesGetData();
       }
       emit(ShopSuccessChangeFavoritesState(favoritesModel!));
       // ignore: avoid_print
@@ -110,19 +112,19 @@ class ShopCubit extends Cubit<ShopStates> {
   GetFavoritesModel? getFavoritesModel;
 
   void favoritesGetData() {
-    // emit(ShopGetFavoritesLoadingState());
-
+    emit(ShopLoadingFavoritesGetDataState());
     DioHelper.getData(
       url: getFavorites,
-   token: CacheHelper.getData(key: 'token'),
+      token: CacheHelper.getData(key: 'token'),
     ).then((value) {
       getFavoritesModel = GetFavoritesModel.fromJson(value.data);
-printFullText(value.data.toString());
+      printFullText(value.data.toString());
       emit(ShopSuccessFavoritesGetDataState());
     }).catchError((error) {
       // ignore: avoid_print
       print(error.toString());
-      emit(ShopErrorFavoritesGetDataState(error));    });
+      emit(ShopErrorFavoritesGetDataState(error));
+    });
   }
 ////////////  End Get Favorites Model Method ////////////
 
