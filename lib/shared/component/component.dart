@@ -82,7 +82,7 @@ Widget defualtBottomNavigationBar({
 ));
 
 ///////////  Start  default Button Widget /////////////
-Widget defaultButton({context, formKey,required VoidCallback onPressed}) => Center(
+Widget defaultButton({context, formKey,required VoidCallback onPressed,required String text}) => Center(
       child: Container(
         width: double.infinity,
         height: 50.0,
@@ -91,7 +91,7 @@ Widget defaultButton({context, formKey,required VoidCallback onPressed}) => Cent
         child: MaterialButton(
           onPressed: onPressed,
           child: Text(
-            'login'.toUpperCase(),
+            text,
             style: Theme.of(context)
                 .textTheme
                 .headline6

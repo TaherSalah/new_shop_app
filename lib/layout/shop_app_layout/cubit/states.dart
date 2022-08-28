@@ -1,5 +1,4 @@
 import 'package:softagy_shop_app/models/Shop_add_favorites/add_favorites_model.dart';
-import 'package:softagy_shop_app/models/get_favorites_model/get_favorites.dart';
 
 abstract class ShopStates {}
 
@@ -55,4 +54,19 @@ class ShopErrorFavoritesGetDataState extends ShopStates {
   final String error;
 
   ShopErrorFavoritesGetDataState(this.error);
+}
+
+////////////////  Start get  User Data States    ///////////////////
+
+
+class ShopLoadingGetUserDataState extends ShopStates {}
+
+class ShopSuccessGetUserDataState extends ShopStates {
+
+}
+
+class ShopErrorGetUserDataState extends ShopStates {
+  final String error;
+
+  ShopErrorGetUserDataState(this.error);
 }

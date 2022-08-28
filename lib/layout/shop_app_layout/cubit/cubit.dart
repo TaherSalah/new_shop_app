@@ -6,6 +6,7 @@ import 'package:softagy_shop_app/shared/network/local/cache_helper.dart';
 import '../../../models/Shop_add_favorites/add_favorites_model.dart';
 import '../../../models/get_favorites_model/get_favorites.dart';
 import '../../../models/shop_categories_model/categories_model.dart';
+import '../../../models/shop_get_user_data/user_data_model.dart';
 import '../../../models/shop_home_model/home_model.dart';
 import '../../../moduels/categories/categories_screen.dart';
 import '../../../moduels/favorites/favorites_screen.dart';
@@ -118,7 +119,9 @@ class ShopCubit extends Cubit<ShopStates> {
       token: CacheHelper.getData(key: 'token'),
     ).then((value) {
       getFavoritesModel = GetFavoritesModel.fromJson(value.data);
-      printFullText(value.data.toString());
+      // ignore: avoid_print
+      print(getFavoritesModel!.data!.data.length);
+      // printFullText(value.data.toString());
       emit(ShopSuccessFavoritesGetDataState());
     }).catchError((error) {
       // ignore: avoid_print
@@ -128,7 +131,30 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 ////////////  End Get Favorites Model Method ////////////
 
+////////////  Start Get User Data Model Method ////////////
+
+  GetUserDataModel? getUserDataModel;
+
+  void getUserData() {
+    emit(ShopLoadingGetUserDataState());
+    DioHelper.getData(
+            url: getData,
+        token: CacheHelper.getData(key: 'token')
+    )
+        .then((value) {
+      getUserDataModel = GetUserDataModel.fromJson(value.data);
+      // ignore: avoid_print
+      print(getUserDataModel!.data!.name);
+      emit(ShopSuccessGetUserDataState());
+    }).catchError((error) {
+      // ignore: avoid_print
+      print(error.toString());
+      emit(ShopErrorGetUserDataState(error));
+    });
+  }
+
+////////////  End Get User Data Model Method ////////////
+
 }
-//////////// End Get Categories Data /////////////
 
 ///////////  End Get Home Data ////////

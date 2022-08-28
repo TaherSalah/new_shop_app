@@ -33,7 +33,7 @@ void main() async {
   }
 
   // ignore: avoid_print
-  print(onBoarding);
+ // print(onBoarding);
   // ignore: avoid_print
   print(tokenData);
 
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) => ShopCubit()..getHomeData()..getCategories()..favoritesGetData(),
+          create: (BuildContext context) => ShopCubit()..getHomeData()..getCategories()..favoritesGetData()..getUserData(),
         ),
         BlocProvider(
           create: (BuildContext context) => ThemeCubit()

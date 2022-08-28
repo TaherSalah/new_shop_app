@@ -22,25 +22,46 @@ class FavoritesScreen extends StatelessWidget {
                   state: ToastStates.error, text: state.favoritesModel.message);
             } else {
               showToast(
-                  state: ToastStates.success, text: state.favoritesModel.message);
+                  state: ToastStates.success,
+                  text: state.favoritesModel.message);
             }
           }
         },
         builder: (context, state) {
           return Conditional.single(
-            context:  context,
-            conditionBuilder:(context) => state is! ShopLoadingFavoritesGetDataState,
-          widgetBuilder: (BuildContext context)=>ListView.separated(
-              itemBuilder: (context, index) => buildFavoritesItems(
-                  ShopCubit.get(context).getFavoritesModel!.data!.data[index],
-                  context),
-              separatorBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: myDivider(),
-              ),
-              itemCount:
-              ShopCubit.get(context).getFavoritesModel!.data!.data.length),
-            fallbackBuilder:  (BuildContext context)=>const Center(child: CircularProgressIndicator()),
+            context: context,
+            conditionBuilder: (context) =>
+                state is! ShopLoadingFavoritesGetDataState,
+            // ignore: prefer_is_empty
+            widgetBuilder: (BuildContext context) =>
+                // ignore: prefer_is_empty
+                ShopCubit.get(context).getFavoritesModel!.data!.data.length == 0
+                    ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Center(child: Image(image: NetworkImage('https://iamqatar.qa/assets/images/no-products-found.png')))
+                        ],
+                      )
+                    : ListView.separated(
+                        itemBuilder: (context, index) => buildFavoritesItems(
+                            ShopCubit.get(context)
+                                .getFavoritesModel!
+                                .data!
+                                .data[index],
+                            context),
+                        separatorBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.all(13.0),
+                              child: myDivider(),
+                            ),
+                        itemCount: ShopCubit.get(context)
+                            .getFavoritesModel!
+                            .data!
+                            .data
+                            .length),
+            fallbackBuilder: (BuildContext context) => const Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         },
       ),
@@ -113,16 +134,18 @@ Widget buildFavoritesItems(Data model, context) => Row(
                       const Spacer(),
                       IconButton(
                           onPressed: () {
-                            ShopCubit.get(context).changFavorites(model.product!.id);
+                            ShopCubit.get(context)
+                                .changFavorites(model.product!.id);
                           },
-                          icon:  Icon(
+                          icon: Icon(
                             Icons.favorite_rounded,
-                            color: ShopCubit.get(context).favorites[model.product!.id] == true
+                            color: ShopCubit.get(context)
+                                        .favorites[model.product!.id] ==
+                                    true
                                 ? grayColor
                                 : defaultColor,
                             size: 20,
                           )),
-
                     ],
                   ),
                 ),

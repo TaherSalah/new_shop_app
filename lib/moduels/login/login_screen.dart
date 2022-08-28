@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+import 'package:softagy_shop_app/layout/shop_app_layout/cubit/cubit.dart';
+import 'package:softagy_shop_app/shared/component/constance.dart';
 import '../../layout/shop_app_layout/home_shop_layout.dart';
 import '../../shared/component/component.dart';
 import '../../shared/component/validate.dart';
@@ -30,9 +32,11 @@ class LoginScreen extends StatelessWidget {
           if (state is ShopLoginSuccessState) {
             if (state.shopModel.status!) {
               showToast(
-                  text: state.shopModel.message,
-                  state: ToastStates.success);
-              CacheHelper.saveData(key: 'token', value: state.shopModel.data!.token).then((value) {
+                  text: state.shopModel.message, state: ToastStates.success);
+              CacheHelper.saveData(
+                      key: 'token', value: state.shopModel.data!.token)
+                  .then((value) {
+                tokenData = state.shopModel.data!.token!;
                 navigateAndFinish(context, ShopHomeLayout);
               });
               // ignore: avoid_print
@@ -121,6 +125,7 @@ class LoginScreen extends StatelessWidget {
                           conditionBuilder: (context) =>
                               state is! ShopLoginLoadingState,
                           widgetBuilder: (context) => defaultButton(
+                              text: 'login'.toUpperCase(),
                               context: context,
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {

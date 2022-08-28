@@ -50,6 +50,7 @@ dependencies:
   fluttertoast:
   google_nav_bar:
   carousel_slider:
+  flutter_svg:
 dev_dependencies:
   flutter_test:
     sdk: flutter
