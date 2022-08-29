@@ -3,7 +3,7 @@ class Validator {
   //////  Start Validator Email ///////
   static String? email(String? value) {
     if (value!.isEmpty) {
-      return 'Email Empty!';
+      return 'Please enter your email address';
     } else if (!value.contains('@') || !value.contains('.com')) {
       return 'EX: example@example.com';
     } else {
@@ -11,11 +11,12 @@ class Validator {
     }
   }
   //////  End Validator Email ///////
+
   //////  Start Validator Password ///////
 
   static String? password(String? value) {
     if (value!.isEmpty) {
-      return 'Password Empty!';
+      return 'Please enter your password';
     } else if (value.length < 6) {
       return 'Password must be at least 6 digit';
     } else {
@@ -25,11 +26,11 @@ class Validator {
   //////  End Validator Password ///////
 
   //////  Start Validator Title ///////
-  static String? title(String? value) {
+  static String? name(String? value) {
     if (value!.isEmpty) {
-      return 'Title Empty!';
+      return 'Please enter your name';
     } else if (value.length < 8) {
-      return 'Title  must contain at least 8 characters';
+      return 'name must contain at least 8 characters';
     } else {
       return null;
     }
@@ -47,7 +48,20 @@ class Validator {
     }
   }
   //////  End Validator Time ///////
-
+  //////  Start Validator phone ///////
+  static String? mobilePhone(String? value) {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = RegExp(pattern);
+    // ignore: prefer_is_empty
+    if (value!.length == 0) {
+      return 'Please enter mobile number';
+    }
+    else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid mobile number';
+    }
+    return null;
+  }
+  //////  End Validator phone ///////
   //////  Start Validator Date ///////
   static String? date(String? value) {
     if (value!.isEmpty) {

@@ -8,7 +8,7 @@ const fitCover = BoxFit.cover;
 const sizeBoxH = SizedBox(
   height: 15.0,
 );
-const sizeBoxW = SizedBox(
+const Widget sizeBoxW = SizedBox(
   width: 20.0,
 );
 

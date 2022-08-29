@@ -8,6 +8,7 @@ import '../../../models/get_favorites_model/get_favorites.dart';
 import '../../../models/shop_categories_model/categories_model.dart';
 import '../../../models/shop_get_user_data/user_data_model.dart';
 import '../../../models/shop_home_model/home_model.dart';
+import '../../../models/shop_update__profile/update_profile_model.dart';
 import '../../../moduels/categories/categories_screen.dart';
 import '../../../moduels/favorites/favorites_screen.dart';
 import '../../../moduels/products/products_screen.dart';
@@ -27,7 +28,7 @@ class ShopCubit extends Cubit<ShopStates> {
     const ProductsScreen(),
     const CategoryScreen(),
     const FavoritesScreen(),
-    const SettingesScreen(),
+     SettingesScreen(),
   ];
   Map<int, bool> favorites = {};
   void changeBottom(int index) {
@@ -137,10 +138,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   void getUserData() {
     emit(ShopLoadingGetUserDataState());
-    DioHelper.getData(
-            url: getData,
-        token: CacheHelper.getData(key: 'token')
-    )
+    DioHelper.getData(url: getData, token: CacheHelper.getData(key: 'token'))
         .then((value) {
       getUserDataModel = GetUserDataModel.fromJson(value.data);
       // ignore: avoid_print
@@ -155,6 +153,38 @@ class ShopCubit extends Cubit<ShopStates> {
 
 ////////////  End Get User Data Model Method ////////////
 
+////////////  Start Update Profile User  Model Method ////////////
+
+  UpdateUserModel? updateUserModel;
+  void updateData({
+    required String name,
+    required String email,
+    required String phone,
+  }) {
+    emit(ShopLoadingUpdateProfileDataState());
+    DioHelper.putData(
+        url: updateProfile,
+        token: CacheHelper.getData(
+          key: 'token',
+        ),
+        data: {
+          'name': name,
+          'email': email,
+          'phone': phone,
+        }).then((value) {
+      updateUserModel = UpdateUserModel.fromJson(value.data);
+      getUserData();
+      // ignore: avoid_print
+      print(updateUserModel!.data!.name);
+      emit(ShopSuccessUpdateProfileDataState(updateUserModel!));
+    }).catchError((error) {
+      // ignore: avoid_print
+      print(error.toString());
+      emit(ShopErrorUpdateProfileDataState(error));
+    });
+  }
+
+////////////  End Update Profile User  Model Method ////////////
 }
 
 ///////////  End Get Home Data ////////
