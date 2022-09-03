@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/states.dart';
-import 'package:softagy_shop_app/shared/component/component.dart';
 import 'package:softagy_shop_app/shared/network/local/cache_helper.dart';
 import '../../../models/Shop_add_favorites/add_favorites_model.dart';
 import '../../../models/get_favorites_model/get_favorites.dart';
@@ -28,7 +27,7 @@ class ShopCubit extends Cubit<ShopStates> {
     const ProductsScreen(),
     const CategoryScreen(),
     const FavoritesScreen(),
-     SettingesScreen(),
+    SettingesScreen(),
   ];
   Map<int, bool> favorites = {};
   void changeBottom(int index) {
@@ -67,7 +66,7 @@ class ShopCubit extends Cubit<ShopStates> {
   CategoriesModel? categoriesModel;
   void getCategories() {
     DioHelper.getData(
-      url: get_categories,
+      url: categories,
       token: tokenData,
     ).then((value) {
       categoriesModel = CategoriesModel.fromJson(value.data);

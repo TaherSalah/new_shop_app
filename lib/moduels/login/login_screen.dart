@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
-import 'package:softagy_shop_app/layout/shop_app_layout/cubit/cubit.dart';
 import 'package:softagy_shop_app/shared/component/constance.dart';
 import '../../layout/shop_app_layout/home_shop_layout.dart';
 import '../../shared/component/component.dart';

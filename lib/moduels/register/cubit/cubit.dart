@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:softagy_shop_app/moduels/login/cubit/state.dart';
 import 'package:softagy_shop_app/moduels/register/cubit/state.dart';
 import '../../../models/shop_login_model/login_model.dart';
 import '../../../shared/network/end_points.dart';

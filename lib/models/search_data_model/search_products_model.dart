@@ -1,11 +1,9 @@
 class SearchModel {
   bool? status;
-  Null? message;
   Data? data;
   SearchModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ?  Data.fromJson(json['data']) : null;
   }
 }
 
@@ -16,10 +14,8 @@ class Data {
   int? from;
   int? lastPage;
   String? lastPageUrl;
-  Null? nextPageUrl;
   String? path;
   int? perPage;
-  Null? prevPageUrl;
   int? to;
   int? total;
 
@@ -35,10 +31,8 @@ class Data {
     from = json['from'];
     lastPage = json['last_page'];
     lastPageUrl = json['last_page_url'];
-    nextPageUrl = json['next_page_url'];
     path = json['path'];
     perPage = json['per_page'];
-    prevPageUrl = json['prev_page_url'];
     to = json['to'];
     total = json['total'];
   }
@@ -47,9 +41,9 @@ class Data {
 
 class DataSearch {
   int? id;
-  double? price;
-  double? oldPrice;
-  int? discount;
+  late dynamic price;
+  late dynamic  oldPrice;
+  late dynamic  discount;
   String? image;
   String? name;
   String? description;
@@ -70,20 +64,5 @@ class DataSearch {
     images = json['images'].cast<String>();
     inFavorites = json['in_favorites'];
     inCart = json['in_cart'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['price'] = this.price;
-    data['old_price'] = this.oldPrice;
-    data['discount'] = this.discount;
-    data['image'] = this.image;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['images'] = this.images;
-    data['in_favorites'] = this.inFavorites;
-    data['in_cart'] = this.inCart;
-    return data;
   }
 }
