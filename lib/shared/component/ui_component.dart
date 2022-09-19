@@ -33,7 +33,7 @@ Widget buildListItems(model, context, {bool isSearch = true}) => Row(
             ],
           ),
         ),
-        sizeBoxW,
+        SizedBox(width: 10.0,),
         Expanded(
           child: Container(
             height: 100,
@@ -45,8 +45,10 @@ Widget buildListItems(model, context, {bool isSearch = true}) => Row(
                   model.name!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      overflow: TextOverflow.ellipsis, height: 1.5),
+                  style:                   Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
+
+                  // TextStyle(
+                  //     overflow: TextOverflow.ellipsis, height: 1.5),
                 ),
                 const Spacer(),
                 Expanded(

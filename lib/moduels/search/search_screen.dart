@@ -42,7 +42,7 @@ class SearchScreen extends StatelessWidget {
                         prefix: Icons.search,
                     validate: (String? value)
                     {
-                        if(value == null || value.isEmpty){
+                        if(value != null || value!.isEmpty){
                           return 'Please Write Your Search Hint Word';
                         }
                         return null;

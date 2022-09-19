@@ -36,6 +36,11 @@ Widget defualtFormField({
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: TextFormField(
+        style: TextStyle(
+          fontSize: 15,
+          color: grayColor,
+        ),
+
         obscureText: isPassword,
         validator: validate,
         onTap: onTap,
@@ -62,15 +67,13 @@ Widget defualtBottomNavigationBar({
   required BuildContext context,
 }) =>
     Container(
-        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
           child: GNav(
-            gap: 8,
+            gap:7,
             onTabChange: onTabChange,
             selectedIndex: 0,
-            curve: Curves.fastOutSlowIn,
-            backgroundColor: Colors.white,
+            curve: Curves.bounceInOut,
             activeColor: defaultColor,
             color: Colors.grey,
             textStyle: Theme.of(context).textTheme.subtitle2!.copyWith(

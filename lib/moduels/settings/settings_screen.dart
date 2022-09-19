@@ -13,7 +13,6 @@ class SettingesScreen extends StatelessWidget {
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
@@ -35,11 +34,64 @@ class SettingesScreen extends StatelessWidget {
                 sizeBoxH,
                 Column(
                   children: [
-                    CircleAvatar(
-                        radius: 70.0,
-                        backgroundImage: NetworkImage(
-                          model.image,
-                        )),
+                    Stack(
+                      children: [
+                        Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                width: 4,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                model.image,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                spreadRadius: 0.2,
+                                blurRadius: 10.0,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: defaultColor,
+                                border: Border.all(width: 4,
+                                color: Theme.of(context).scaffoldBackgroundColor)
+
+                              ),
+                             child: IconButton(
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    ShopCubit.get(context).updateData(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text,
+                                    );
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Theme.of(context).scaffoldBackgroundColor,
+                                ),
+                              ),
+                            )),
+                      ],
+                    ),
                     sizeBoxH,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,22 +134,8 @@ class SettingesScreen extends StatelessWidget {
                         prefix: Icons.phone),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Center(
-                    child: defaultButton(
-                        text: 'update'.toUpperCase(),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            ShopCubit.get(context).updateData(
-                              name: nameController.text,
-                              email: emailController.text,
-                              phone: phoneController.text,
-                            );
-                          }
-                        },
-                        context: context),
-                  ),
+                const Padding(
+                  padding: EdgeInsets.all(25.0),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(25.0),

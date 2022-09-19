@@ -42,7 +42,19 @@ ThemeData lightMode = ThemeData(
     ),
     bottomAppBarTheme: const BottomAppBarTheme(
       elevation: 20.0,
-    ));
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+        suffixIconColor:blackColor ,
+        prefixIconColor:blackColor ,
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                width: 2,
+                color: Colors.black.withOpacity(0.1),
+            )
+        )
+    )
+
+);
 ThemeData darkMode = ThemeData(
   textTheme: const TextTheme(
       bodyText1: TextStyle(
@@ -72,4 +84,14 @@ ThemeData darkMode = ThemeData(
       statusBarIconBrightness: Brightness.light,
     ),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    suffixIconColor:whiteColor ,
+    prefixIconColor:whiteColor ,
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        width: 2,
+        color: whiteColor,
+      )
+    )
+  )
 );

@@ -4,6 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../moduels/search/search_screen.dart';
 import '../../shared/component/component.dart';
+import '../../shared/cubit/cubit.dart';
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 
@@ -19,9 +20,15 @@ class ShopHomeLayout extends StatelessWidget {
         var homeCubit=ShopCubit.get(context);
         return Scaffold(
           // backgroundColor: Colors.deepOrangeAccent,
-          appBar: AppBar(
-            title:const Text('sallaa'),
+          appBar:  AppBar(
+            elevation: 0.0,
+            title:const Text('Amazon TM'),
             actions: [
+              IconButton(
+                  onPressed: () {
+                    ThemeCubit.get(context).changeMode();
+                  },
+                  icon: const Icon(Icons.brightness_4_outlined)),
               IconButton(
                   onPressed: () {
                     navigateTo(context,  const SearchScreen());
