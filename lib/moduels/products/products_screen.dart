@@ -8,6 +8,7 @@ import '../../models/shop_categories_model/categories_model.dart';
 import '../../models/shop_home_model/home_model.dart';
 import '../../shared/component/component.dart';
 import '../../shared/styles/style.dart';
+import '../products_details/products_details_screen.dart';
 
 /*****/ /////// End Products Import package ////////*****/
 /*****/ /////// Start Products Screen Class ////////*****/
@@ -38,10 +39,15 @@ class ProductsScreen extends StatelessWidget {
           conditionBuilder: (context) =>
               ShopCubit.get(context).homeModel != null &&
               ShopCubit.get(context).categoriesModel != null,
-          widgetBuilder: (context) => productsBuilder(
-            ShopCubit.get(context).homeModel,
-            ShopCubit.get(context).categoriesModel,
-            context,
+          widgetBuilder: (context) => InkWell(
+            onTap: (){
+              navigateTo(context, const ProductsDetails());
+            },
+            child: productsBuilder(
+              ShopCubit.get(context).homeModel,
+              ShopCubit.get(context).categoriesModel,
+              context,
+            ),
           ),
           fallbackBuilder: (context) =>
               const Center(child: CircularProgressIndicator()),

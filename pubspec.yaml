@@ -51,6 +51,7 @@ dependencies:
   google_nav_bar:
   carousel_slider:
   flutter_svg:
+  flutter_cart:
   easy_localization:
 dev_dependencies:
   flutter_test:

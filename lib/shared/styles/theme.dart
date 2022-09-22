@@ -84,7 +84,7 @@ ThemeData darkMode = ThemeData(
       statusBarIconBrightness: Brightness.light,
     ),
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     suffixIconColor:whiteColor ,
     prefixIconColor:whiteColor ,
     enabledBorder: OutlineInputBorder(

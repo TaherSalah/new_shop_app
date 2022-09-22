@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../moduels/cart/cart_products_screen.dart';
+import '../../moduels/products_details/products_details_screen.dart';
 import '../../moduels/search/search_screen.dart';
 import '../../shared/component/component.dart';
 import '../../shared/cubit/cubit.dart';
@@ -35,6 +37,13 @@ class ShopHomeLayout extends StatelessWidget {
                   },
                 icon:const Icon(Icons.search),
               ),
+              IconButton(
+                onPressed: () {
+                  navigateTo(context,  const CartProductScreen());
+                },
+                icon:const Icon(Icons.shopping_cart),
+              ),
+
             ],
           ),
           body: homeCubit.screenBottom[homeCubit.currentIndex],

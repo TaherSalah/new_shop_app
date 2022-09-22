@@ -111,7 +111,31 @@ Widget defaultButton(
       ),
     );
 ///////////  End  default Button Widget /////////////
+///////////  Start  defaultSmallButton Widget /////////////
+Widget defaultSmallButton(
+    {context,
+      formKey,
+      required VoidCallback onPressed,
+      required String text}) =>
+    Center(
+      child: Container(
+        height: 45.0,
 
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: defaultColor),
+        child: MaterialButton(
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(color: Colors.white,fontSize: 16),
+          ),
+        ),
+      ),
+    );
+///////////  End  defaultSmallButton Widget /////////////
 ///////////  Start  default Text Button Widget /////////////
 
 Widget defaultTextButton(
