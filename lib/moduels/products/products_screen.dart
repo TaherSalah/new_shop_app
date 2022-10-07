@@ -2,6 +2,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:softagy_shop_app/moduels/cart/cart_products_screen.dart';
+import 'package:softagy_shop_app/moduels/products_details/cubit/cubit.dart';
 import '../../layout/shop_app_layout/cubit/cubit.dart';
 import '../../layout/shop_app_layout/cubit/states.dart';
 import '../../models/shop_categories_model/categories_model.dart';
@@ -15,7 +17,9 @@ import '../products_details/products_details_screen.dart';
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     ///////// Start Products Bloc Consumer /////////
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (context, state) {
@@ -29,6 +33,15 @@ class ProductsScreen extends StatelessWidget {
                 state: ToastStates.success, text: state.favoritesModel.message);
           }
         }
+        // if (state is ShopChangeCartSuccessState) {
+        //   if (state.cartChangeModel.status == false) {
+        //     showToast(
+        //         state: ToastStates.error, text: state.cartChangeModel.message);
+        //   } else {
+        //     showToast(
+        //         state: ToastStates.success, text: state.cartChangeModel.message);
+        //   }
+        // }
       },
       builder: (context, state) {
         // var cubit = ShopCubit.get(context).homeModel;
@@ -36,18 +49,16 @@ class ProductsScreen extends StatelessWidget {
           context: context,
           // ignore: unnecessary_null_comparison
           ///////// Start Products conditionBuilder /////////
-          conditionBuilder: (context) =>
+          conditionBuilder: (
+            context,
+          ) =>
               ShopCubit.get(context).homeModel != null &&
               ShopCubit.get(context).categoriesModel != null,
-          widgetBuilder: (context) => InkWell(
-            onTap: (){
-              navigateTo(context, const ProductsDetails());
-            },
-            child: productsBuilder(
-              ShopCubit.get(context).homeModel,
-              ShopCubit.get(context).categoriesModel,
-              context,
-            ),
+          widgetBuilder: (context) => productsBuilder(
+            ShopCubit.get(context).homeModel,
+            ShopCubit.get(context).categoriesModel,
+            // DetailsCubit.get(context).detailsModel,
+            context,
           ),
           fallbackBuilder: (context) =>
               const Center(child: CircularProgressIndicator()),
@@ -145,7 +156,7 @@ Widget productsBuilder(
               GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  childAspectRatio:1/1.92,
+                  childAspectRatio: 1 / 2.1,
                   mainAxisSpacing: 2.0,
                   crossAxisSpacing: 2.0,
                   crossAxisCount: 2,
@@ -162,87 +173,112 @@ Widget productsBuilder(
 /*****/ /////// End products Builder  Widget ////////*****/
 
 /*****/ /////// Start build Grid Items  Widget ////////*****/
-Widget buildGridItems(ProductsModel model, context) => Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /*****/ ///////Products Image////////*****/
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              ///////// Start Products Network Image /////////
-              Image(
-                image: NetworkImage('${model.image}'),
-                width: double.infinity,
-                height: 200.0,
-              ),
-              ///////// End Products Network Image /////////
-              ///////// Start Products Discount layer /////////
-              if (model.discount != 0)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  color: defaultColor,
-                  child: const Text(
-                    'Discount',
-                    style: TextStyle(fontSize: 12.5, color: Colors.white),
-                  ),
-                ),
-              ///////// End Products Discount layer /////////
-            ],
-          ),
-          /*****/ ///////Products Name////////*****/
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+Widget buildGridItems(ProductsModel model, context) => InkWell(
+      onTap: () {
+        DetailsCubit.get(context).getDetailsData(model.id!);
+        navigateTo(context,  SHowItemProduct(model: model,));
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /*****/ ///////Products Image////////*****/
+            Stack(
+              alignment: AlignmentDirectional.bottomStart,
               children: [
-                Text(
-                  '${model.name}',
-                  maxLines: 2,
-                  style: const TextStyle(
-                      overflow: TextOverflow.ellipsis, height: 1.5),
+                ///////// Start Products Network Image /////////
+                Image(
+                  image: NetworkImage('${model.image}'),
+                  width: double.infinity,
+                  height: 200.0,
                 ),
-                /*****/ ///////Products Price & Discount////////*****/
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 9.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        '${model.price.round()}',
-                        style: const TextStyle(color: defaultColor),
-                      ),
-                      const SizedBox(
-                        width: 15.0,
-                      ),
-                      if (model.discount != 0)
-                        Text(
-                          '${model.oldPrice.round()}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12.0,
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                      const Spacer(),
-                      IconButton(
-                          onPressed: () {
-                            ShopCubit.get(context).changFavorites(model.id!);
-                          },
-                          icon:  Icon(
-                            Icons.favorite_rounded,
-                            color: ShopCubit.get(context).favorites[model.id!] == true
-                                ? defaultColor
-                                : Colors.grey,
-                            size: 20,
-                          )),
-                    ],
+                ///////// End Products Network Image /////////
+                ///////// Start Products Discount layer /////////
+                if (model.discount != 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    color: defaultColor,
+                    child: const Text(
+                      'Discount',
+                      style: TextStyle(fontSize: 12.5, color: Colors.white),
+                    ),
                   ),
-                ),
+                ///////// End Products Discount layer /////////
               ],
             ),
-          ),
-        ],
+            /*****/ ///////Products Name////////*****/
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${model.name}',
+                    maxLines: 2,
+                    style: const TextStyle(
+                        overflow: TextOverflow.ellipsis, height: 1.5),
+                  ),
+                  /*****/ ///////Products Price & Discount////////*****/
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 9.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          '${model.price.round()}',
+                          style: const TextStyle(color: defaultColor),
+                        ),
+                        const SizedBox(
+                          width: 15.0,
+                        ),
+                        if (model.discount != 0)
+                          Text(
+                            '${model.oldPrice.round()}',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12.0,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+
+          Row(children: [
+            IconButton(
+                onPressed: () {
+                  ShopCubit.get(context).changFavorites(model.id!);
+                },
+                icon: Icon(
+                  Icons.favorite_rounded,
+                  color:
+                  ShopCubit.get(context).favorites[model.id!] == true
+                      ? defaultColor
+                      : Colors.grey,
+                  size: 20,
+                )),
+            Spacer(),
+            IconButton(
+                onPressed: () {
+                  ShopCubit.get(context).changeCart(productId: model.id!);
+
+                },
+              icon:
+                    Icon(
+                Icons.shopping_cart_sharp,
+                color:   ShopCubit.get(context).inCart[model.id!] == true
+                    ? defaultColor
+                    : Colors.grey,
+              )
+
+              ),
+
+          ],)
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
 /*****/ /////// End build Grid Items  Widget ////////*****/

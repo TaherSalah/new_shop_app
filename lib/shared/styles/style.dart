@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+double defaultBorder = 8.0;
 
 const defaultColor = Colors.deepOrange;
 const whiteColor = Colors.white;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:softagy_shop_app/moduels/products_details/cubit/cubit.dart';
 import 'package:softagy_shop_app/shared/cubit/cubit.dart';
 import 'package:softagy_shop_app/shared/cubit/states.dart';
 import 'package:softagy_shop_app/shared/network/local/cache_helper.dart';
@@ -28,7 +29,7 @@ void main() async {
     widget = const BoardingScreen();
   }
   // ignore: avoid_print
-  print(tokenData);
+  // print(tokenData);
   // ignore: deprecated_member_use
   BlocOverrides.runZoned(() {
     runApp(MyApp(
@@ -57,6 +58,9 @@ class MyApp extends StatelessWidget {
             ..getCategories()
             ..favoritesGetData()
             ..getUserData(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => DetailsCubit()
         ),
         BlocProvider(
           create: (BuildContext context) => ThemeCubit()

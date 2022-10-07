@@ -1,6 +1,7 @@
 import 'package:softagy_shop_app/models/Shop_add_favorites/add_favorites_model.dart';
 
 import '../../../models/shop_update__profile/update_profile_model.dart';
+import '../../../moduels/cart/get_cart.dart';
 
 abstract class ShopStates {}
 
@@ -81,3 +82,26 @@ class ShopErrorUpdateProfileDataState extends ShopStates {
 
   ShopErrorUpdateProfileDataState(this.error);
 }
+
+////////////////  Start Cart  products Data States    ///////////////////
+  class ShopGetCartLoadingState extends ShopStates{}
+
+class ShopGetCartSuccessState extends ShopStates{}
+
+class ShopGetCartErrorState extends ShopStates{}
+
+////////////////  Start ChangeCart  States    ///////////////////
+
+class ShopChangeCartLoadingState extends ShopStates {}
+
+class ShopChangeCartSuccessState extends ShopStates {
+  // final CartModel changeCartModel;
+  //
+  // ShopChangeCartSuccessState(this.changeCartModel);
+}
+
+class ShopChangeCartErrorState extends ShopStates {}
+
+class ShopCubitReadMoreDescriptionState extends ShopStates {}
+class ShopCubitDefaultReadMoreState extends ShopStates {}
+

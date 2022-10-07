@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/svg.dart';
@@ -115,12 +116,13 @@ Widget defaultButton(
 Widget defaultSmallButton(
     {context,
       formKey,
+      double? width,
       required VoidCallback onPressed,
       required String text}) =>
     Center(
       child: Container(
         height: 45.0,
-
+width: width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: defaultColor),
         child: MaterialButton(
@@ -130,7 +132,7 @@ Widget defaultSmallButton(
             style: Theme.of(context)
                 .textTheme
                 .headline6
-                ?.copyWith(color: Colors.white,fontSize: 16),
+                ?.copyWith(color: Colors.white,fontSize: 15),
           ),
         ),
       ),
@@ -216,3 +218,20 @@ Widget buildImageEmpty() {
     width: 150,
   ));
 }
+
+
+Widget cachedImage(
+{
+  double? width,
+  required String imageUrl,
+  LoadingErrorWidgetBuilder? errorWidget
+
+}
+    )=>CachedNetworkImage(
+  width: 140,
+  fit: BoxFit.cover,
+  imageUrl: imageUrl,
+  placeholder: (context, url) =>
+  const Center(child: CircularProgressIndicator()),
+  errorWidget: errorWidget
+);

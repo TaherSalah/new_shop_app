@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/states.dart';
 import 'package:softagy_shop_app/shared/network/local/cache_helper.dart';
 import '../../../models/Shop_add_favorites/add_favorites_model.dart';
+import '../../../models/add_cart_model/change_cart.dart';
+import '../../../models/add_cart_model/get_cart.dart';
 import '../../../models/get_favorites_model/get_favorites.dart';
 import '../../../models/shop_categories_model/categories_model.dart';
 import '../../../models/shop_get_user_data/user_data_model.dart';
@@ -30,6 +32,8 @@ class ShopCubit extends Cubit<ShopStates> {
     SettingesScreen(),
   ];
   Map<int, bool> favorites = {};
+  Map<int, bool> inCart = {};
+
   void changeBottom(int index) {
     currentIndex = index;
     emit(ShopBottomNavigationBarState());
@@ -49,6 +53,12 @@ class ShopCubit extends Cubit<ShopStates> {
         favorites.addAll({element.id!: element.inFavorites!});
         // ignore: avoid_print
         // print(favorites.toString());
+      });
+      //////   for each in add to cart /////////
+      // ignore: avoid_function_literals_in_foreach_calls
+      homeModel!.data!.products.forEach((element) {
+        inCart.addAll({element.id!: element.inCart});
+        // ignore: avoid_print
       });
       // ignore: avoid_print
       // printFullText(homeModel!.data!.products[0].name.toString());
@@ -130,18 +140,70 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 ////////////  End Get Favorites Model Method ////////////
+//////////// Start Get cart Data /////////////
+  CartModel? cartModel;
+  void getCartData()
+  {
+     emit(ShopGetCartLoadingState());
+     DioHelper.getData(
+       url: getCart,
+       token: CacheHelper.getData(key: 'token'),
+     ).then((value){
+       cartModel=CartModel.fromJson(value.data);
+       if(cartModel!.status!){
+         // ignore: avoid_print
+         print('total price for cart is ${cartModel!.data!.total}');
+         emit(ShopGetCartSuccessState());
+       }
+     }).catchError((error){
+       emit(ShopGetCartErrorState());
+       // ignore: avoid_print
+       print(error.toString());
+     });
+  }
+//////////// End Get cart Data /////////////
+
+//////////// Start change Cart Products /////////////
+  ChangeCartModel? changeCartModel;
+  void changeCart({required int productId})
+  {
+    inCart[productId] = !inCart[productId]!;
+    emit(ShopChangeCartLoadingState());
+    DioHelper.postData(
+
+        url: 'carts',
+        data: {
+      'product_id':productId,
+        },
+    token: CacheHelper.getData(key: 'token'),
+    ).then((value){
+      changeCartModel=ChangeCartModel.fromJson(value.data);
+      if(changeCartModel!.status==true){
+        getCartData();
+        // ignore: avoid_print
+        print(changeCartModel!.status);
+
+      }
+      // ignore: avoid_print
+      emit(ShopChangeCartSuccessState());
+    }).catchError((error){
+      emit(ShopChangeCartErrorState());
+      // ignore: avoid_print
+      print(error.toString());
+    });
+
+
+  }
+//////////// End change Cart Products /////////////
 
 ////////////  Start Get User Data Model Method ////////////
-
   GetUserDataModel? getUserDataModel;
-
   void getUserData() {
     emit(ShopLoadingGetUserDataState());
     DioHelper.getData(url: getData, token: CacheHelper.getData(key: 'token'))
         .then((value) {
       getUserDataModel = GetUserDataModel.fromJson(value.data);
       // ignore: avoid_print
-      print(getUserDataModel!.data!.name);
       emit(ShopSuccessGetUserDataState());
     }).catchError((error) {
       // ignore: avoid_print
@@ -149,11 +211,9 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(ShopErrorGetUserDataState(error));
     });
   }
-
 ////////////  End Get User Data Model Method ////////////
 
 ////////////  Start Update Profile User  Model Method ////////////
-
   UpdateUserModel? updateUserModel;
   void updateData({
     required String name,
@@ -181,6 +241,18 @@ class ShopCubit extends Cubit<ShopStates> {
       print(error.toString());
       emit(ShopErrorUpdateProfileDataState(error));
     });
+  }
+
+  bool isReadMore = true;
+
+  void defaultBackReadMore() {
+    isReadMore = true;
+    emit(ShopCubitDefaultReadMoreState());
+  }
+
+  void showDescription() {
+    isReadMore = !isReadMore;
+    emit(ShopCubitReadMoreDescriptionState());
   }
 
 ////////////  End Update Profile User  Model Method ////////////

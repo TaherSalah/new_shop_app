@@ -68,13 +68,13 @@ class SettingesScreen extends StatelessWidget {
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: defaultColor,
-                                border: Border.all(width: 4,
-                                color: Theme.of(context).scaffoldBackgroundColor)
-
-                              ),
-                             child: IconButton(
+                                  shape: BoxShape.circle,
+                                  color: defaultColor,
+                                  border: Border.all(
+                                      width: 4,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor)),
+                              child: IconButton(
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
                                     ShopCubit.get(context).updateData(
@@ -86,7 +86,8 @@ class SettingesScreen extends StatelessWidget {
                                 },
                                 icon: Icon(
                                   Icons.edit,
-                                  color: Theme.of(context).scaffoldBackgroundColor,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                 ),
                               ),
                             )),
