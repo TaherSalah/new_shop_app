@@ -54,6 +54,7 @@ dependencies:
   cached_network_image:
   flutter_cart:
   easy_localization:
+  flutter_settings_screens:
 dev_dependencies:
   flutter_test:
     sdk: flutter

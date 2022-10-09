@@ -175,7 +175,7 @@ Widget productsBuilder(
 /*****/ /////// Start build Grid Items  Widget ////////*****/
 Widget buildGridItems(ProductsModel model, context) => InkWell(
       onTap: () {
-        DetailsCubit.get(context).getDetailsData(model.id!);
+        DetailsCubit.get(context).getDetailsData(model.id);
         navigateTo(context,  SHowItemProduct(model: model,));
       },
       child: Container(
