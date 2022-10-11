@@ -2,18 +2,16 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/cubit.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/states.dart';
 import 'package:softagy_shop_app/shared/component/component.dart';
 import 'package:softagy_shop_app/shared/cubit/cubit.dart';
 import 'package:softagy_shop_app/shared/styles/style.dart';
-
+import '../../shared/component/constance.dart';
 import '../update/update_data_screen.dart';
-
 // ignore: must_be_immutable
 class SettingesScreen extends StatefulWidget {
-  SettingesScreen({super.key});
+  const SettingesScreen({super.key});
 
   @override
   State<SettingesScreen> createState() => _SettingesScreenState();
@@ -79,25 +77,15 @@ class _SettingesScreenState extends State<SettingesScreen> {
                             bottom: 0,
                             right: 0,
                             child: Container(
-                              width: 40,
-                              height: 40,
+                              width: 30,
+                              height: 30,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: defaultColor,
+                                  color: Colors.green,
                                   border: Border.all(
                                       width: 4,
                                       color: Theme.of(context)
                                           .scaffoldBackgroundColor)),
-                              child: IconButton(
-                                onPressed: () {
-                                  navigateTo(context, const UpdateScreen());
-                                },
-                                icon: Icon(
-                                  Icons.edit,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                ),
-                              ),
                             )),
                         sizeBoxH,
                       ],
@@ -227,7 +215,7 @@ class _SettingesScreenState extends State<SettingesScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        navigateTo(context, UpdateScreen());
+                        navigateTo(context, const UpdateScreen());
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -438,7 +426,6 @@ class _SettingesScreenState extends State<SettingesScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        navigateTo(context, const UpdateScreen());
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -578,7 +565,9 @@ class _SettingesScreenState extends State<SettingesScreen> {
                       height: 6,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        signOut(context);
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Stack(

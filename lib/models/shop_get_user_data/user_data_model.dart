@@ -32,15 +32,3 @@ class UserDataModels {
   }
 }
 
-// "status": true,
-// "data": {
-// "id": 17704,
-// "name": "yara",
-// "email": "yara1@gmail.com",
-// "phone": "3333333333333333333",
-// "image": "https://student.valuxapps.com/storage/uploads/users/ypQrQZ4v9v_1660510754.jpeg",
-// "points": 0,
-// "credit": 0,
-// "token": ""
-// }
-// }
