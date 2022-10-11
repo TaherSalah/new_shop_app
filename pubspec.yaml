@@ -55,6 +55,7 @@ dependencies:
   flutter_cart:
   easy_localization:
   flutter_settings_screens:
+  adaptive_action_sheet:
 dev_dependencies:
   flutter_test:
     sdk: flutter

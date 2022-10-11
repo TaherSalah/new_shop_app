@@ -1,3 +1,5 @@
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:softagy_shop_app/layout/shop_app_layout/cubit/cubit.dart';
@@ -89,6 +91,26 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       text: 'Update Data',
                       context: context,
                     ),
+                  ),
+                  Container(
+                    child: CupertinoButton.filled(
+                        child: Text('Show Bottom'),
+                        onPressed: () {
+                          showAdaptiveActionSheet(
+                              context: context,
+                              title: Text('data'),
+                              androidBorderRadius: 30,
+                              cancelAction: CancelAction(title: Text('cancel')),
+                              actions: <BottomSheetAction>[
+                                BottomSheetAction(
+                                    title: Text('Arabic'),
+                                    onPressed: (context) {
+                                    }),
+                                BottomSheetAction(
+                                    title: Text('English'),
+                                    onPressed: (context) {}),
+                              ]);
+                        }),
                   )
                 ],
               ),
