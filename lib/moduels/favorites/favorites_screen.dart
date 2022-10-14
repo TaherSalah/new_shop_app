@@ -11,39 +11,36 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-      child: BlocConsumer<ShopCubit, ShopStates>(
-        listener: (context, state) {
-          if (state is ShopSuccessChangeFavoritesState) {
-            if (state.favoritesModel.status == false) {
-              showToast(
-                  state: ToastStates.error, text: state.favoritesModel.message);
-            } else {
-              showToast(
-                  state: ToastStates.success, text: state.favoritesModel.message);
-            }
+    return BlocConsumer<ShopCubit, ShopStates>(
+      listener: (context, state) {
+        if (state is ShopSuccessChangeFavoritesState) {
+          if (state.favoritesModel.status == false) {
+            showToast(
+                state: ToastStates.error, text: state.favoritesModel.message);
+          } else {
+            showToast(
+                state: ToastStates.success, text: state.favoritesModel.message);
           }
-        },
-        builder: (context, state) {
-          return Conditional.single(
-            context:  context,
-            conditionBuilder:(context) => state is! ShopLoadingFavoritesGetDataState,
+        }
+      },
+      builder: (context, state) {
+        return Conditional.single(
+          context:  context,
+          conditionBuilder:(context) => state is! ShopLoadingFavoritesGetDataState,
           widgetBuilder: (BuildContext context)=>ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => buildListItems(
-                  ShopCubit.get(context).getFavoritesModel!.data!.data[index].product,
-                  context),
-              separatorBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: myDivider(),
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => buildFav(context,
+                ShopCubit.get(context).getFavoritesModel!.data!.data[index].product,
+                ),
+              separatorBuilder: (context, index) => const Padding(
+                padding: EdgeInsets.all(4.0),
               ),
+
               itemCount:
-              ShopCubit.get(context).getFavoritesModel!.data!.data.length),
-            fallbackBuilder:  (BuildContext context)=>const Center(child: CircularProgressIndicator()),
-          );
-        },
-      ),
+            ShopCubit.get(context).getFavoritesModel!.data!.data.length),
+          fallbackBuilder:  (BuildContext context)=>const Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 }

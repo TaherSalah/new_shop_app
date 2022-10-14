@@ -28,7 +28,7 @@ class SHowItemProduct extends StatelessWidget {
 
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .8,
+            height: MediaQuery.of(context).size.height * .6,
             child: Hero(
               tag: model.id,
               child: Stack(
@@ -49,7 +49,7 @@ class SHowItemProduct extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .4,
+              height: MediaQuery.of(context).size.height * .6,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.only(

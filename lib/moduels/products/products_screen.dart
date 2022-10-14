@@ -260,13 +260,13 @@ Widget buildGridItems(ProductsModel model, context) => InkWell(
             Spacer(),
             IconButton(
                 onPressed: () {
-                  ShopCubit.get(context).changeCart(productId: model.id!);
+                  ShopCubit.get(context).changeCart(productId: model.id);
 
                 },
               icon:
                     Icon(
                 Icons.shopping_cart_sharp,
-                color:   ShopCubit.get(context).inCart[model.id!] == true
+                color:   ShopCubit.get(context).inCart[model.id] == true
                     ? defaultColor
                     : Colors.grey,
               )

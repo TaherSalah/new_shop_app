@@ -4,7 +4,8 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import '../../models/search_data_model/search_products_model.dart';
+
+
 import '../styles/style.dart';
 
 ///////////  Start  Divider Widget /////////////

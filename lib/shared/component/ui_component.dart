@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:softagy_shop_app/models/get_details_model/get_details.dart';
 
@@ -242,3 +243,449 @@ Widget buildListItems(model, context, {bool isSearch = true}) => Row(
 //         )
 //       ],
 //     );
+Widget buildCart(context,model)=> Padding(
+  padding: const EdgeInsets.all(10.0),
+  child: Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(
+        height: MediaQuery.of(context).size.height * 0.23,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 4,
+                  offset: const Offset(0, 3))
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CachedNetworkImage(
+                imageUrl: '${model!.image}',
+                width: 110,
+                height: 110,
+                errorWidget: (context, url, error) =>
+                const Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) =>
+                const Center(child: Text('Product image')),
+                fit: BoxFit.fill,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${model.name}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(fontSize: 16.0,fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${model.price.round()}\$',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(fontSize: 14.0,fontWeight: FontWeight.bold),
+
+                          // TextStyle(
+
+                          //     overflow: TextOverflow.ellipsis, height: 1.5),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        if (model.discount != 0)
+                          Text(
+                            '${model.oldPrice}\$',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                fontSize: 14.0,
+                                color: grayColor,
+                                fontWeight: FontWeight.w500,
+                                decoration:
+                                TextDecoration.lineThrough),
+
+                            // TextStyle(
+
+                            //     overflow: TextOverflow.ellipsis, height: 1.5),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // ignore: avoid_print
+                            // setState(() {
+                            //   quantity--;
+                            // });
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: defaultColor,
+                            ),
+                            child: const Center(
+                                child: Text(
+                                  '-',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 7),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Center(
+                                child: Text(
+                                  '1',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            // ignore: avoid_print
+                            print('plus');
+                            // setState(() {
+                            //   quantity++;
+                            // });
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey,
+                            ),
+                            child: const Center(
+                                child: Text(
+                                  '+',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        if (model.discount != 0)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                              'https://cdn-icons-png.flaticon.com/512/5305/5305244.png',
+                              errorWidget: (context, url, error) =>
+                              const CircularProgressIndicator(),
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          child: CircleAvatar(
+                            maxRadius: 20,
+                            backgroundColor: grayColor.withOpacity(.5),
+                            child: const Icon(Icons.favorite,
+                                size: 22, color: defaultColor),
+                          ),
+                          onTap: () {
+                            ShopCubit.get(context)
+                                .changFavorites(model.id!);
+                          },
+                        ),
+                        const SizedBox(
+                          width: 70,
+                        ),
+                        GestureDetector(
+                          child: CircleAvatar(
+                            maxRadius: 20,
+                            backgroundColor: grayColor.withOpacity(.5),
+                            child: const Icon(Icons.delete_rounded,
+                                size: 22, color: Colors.red),
+                          ),
+                          onTap: () {
+                            ShopCubit.get(context)
+                                .changeCart(productId: model.id!);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+    ],
+  ),
+);
+
+Widget buildFav(context,model)=> Padding(
+  padding: const EdgeInsets.all(10.0),
+  child: Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(
+        height: MediaQuery.of(context).size.height * 0.23,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 4,
+                  offset: const Offset(0, 3))
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CachedNetworkImage(
+                imageUrl: '${model!.image}',
+                width: 110,
+                height: 110,
+                errorWidget: (context, url, error) =>
+                const Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) =>
+                const Center(child: Text('Product image')),
+                fit: BoxFit.fill,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${model.name}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(fontSize: 16.0,fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${model.price.round()}\$',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(fontSize: 14.0,fontWeight: FontWeight.bold),
+
+                          // TextStyle(
+
+                          //     overflow: TextOverflow.ellipsis, height: 1.5),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        if (model.discount != 0)
+                          Text(
+                            '${model.oldPrice}\$',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                fontSize: 14.0,
+                                color: grayColor,
+                                fontWeight: FontWeight.w500,
+                                decoration:
+                                TextDecoration.lineThrough),
+
+                            // TextStyle(
+
+                            //     overflow: TextOverflow.ellipsis, height: 1.5),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // ignore: avoid_print
+                            // setState(() {
+                            //   quantity--;
+                            // });
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: defaultColor,
+                            ),
+                            child: const Center(
+                                child: Text(
+                                  '-',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 7),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Center(
+                                child: Text(
+                                  '1',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            // ignore: avoid_print
+                            print('plus');
+                            // setState(() {
+                            //   quantity++;
+                            // });
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey,
+                            ),
+                            child: const Center(
+                                child: Text(
+                                  '+',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        if (model.discount != 0)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                              'https://cdn-icons-png.flaticon.com/512/5305/5305244.png',
+                              errorWidget: (context, url, error) =>
+                              const CircularProgressIndicator(),
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          child: CircleAvatar(
+                            maxRadius: 20,
+                            backgroundColor: grayColor.withOpacity(.5),
+                            child: const Icon(Icons.add_shopping_cart,
+                                size: 22, color: defaultColor),
+                          ),
+                          onTap: () {
+                            ShopCubit.get(context).changeCart(productId: model.id);
+                          },
+                        ),
+                        const SizedBox(
+                          width: 70,
+                        ),
+                        GestureDetector(
+                          child: CircleAvatar(
+                            maxRadius: 20,
+                            backgroundColor: grayColor.withOpacity(.5),
+                            child: const Icon(Icons.delete_rounded,
+                                size: 22, color: Colors.red),
+                          ),
+                          onTap: () {
+                            ShopCubit.get(context)
+                                .changFavorites( model.id!);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+    ],
+  ),
+);

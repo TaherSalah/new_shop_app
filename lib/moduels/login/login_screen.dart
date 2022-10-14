@@ -68,9 +68,22 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        CircleAvatar(
+                            radius: 60,
+                            backgroundImage:
+                                AssetImage('assets/images/loginScreen.jpg')),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Text(
                           'login'.toUpperCase(),
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(fontSize: 25),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
                         ),
                         Text(
                           'login now to browser our hot offers',
@@ -80,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                               ?.copyWith(color: Colors.grey),
                         ),
                         const SizedBox(
-                          height: 50.0,
+                          height: 40.0,
                         ),
                         Stack(
                           children: [
@@ -88,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               height: MediaQuery.of(context).size.height * 0.6,
                               decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.6),
+                                  color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
                                   borderRadius: BorderRadius.circular(30),
                                   boxShadow: [
                                     BoxShadow(
@@ -174,7 +187,8 @@ class LoginScreen extends StatelessWidget {
                                         'Don\'t have an account ? ',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1!.copyWith(fontSize: 14),
+                                            .bodyText1!
+                                            .copyWith(fontSize: 14),
                                       ),
                                       defaultTextButton(
                                           onPressed: () {
@@ -200,7 +214,6 @@ class LoginScreen extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               color: Colors.white,
-
                                             ),
                                             width: 30,
                                             height: 30,
@@ -276,7 +289,7 @@ class LoginScreen extends StatelessWidget {
                                         child: Container(
                                           decoration: BoxDecoration(
                                               color: Colors.white,
-                                              boxShadow: [
+                                              boxShadow: const [
                                                 BoxShadow(
                                                     color: grayColor,
                                                     spreadRadius: 4,
@@ -295,13 +308,12 @@ class LoginScreen extends StatelessWidget {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Container(
-
                                                   child: SvgPicture.asset(
                                                       'assets/images/google.svg',
                                                       allowDrawingOutsideViewBox:
                                                           true),
                                                 ),
-                                                Spacer(),
+                                            const    Spacer(),
                                                 Text(
                                                   'Gmail',
                                                   style: Theme.of(context)
